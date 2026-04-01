@@ -1,0 +1,796 @@
+/**
+ * AssetReviewModal.module.css
+ * Lloyds Metals & Energy Ltd. — Asset Review & Print Modal
+ *
+ * Design language: Crisp industrial-document aesthetic.
+ * Light theme with deep navy structure, razor crimson accents,
+ * Barlow Condensed headers. Print rules embed a clean A4 cert.
+ */
+
+@import url('https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700;800&family=Barlow:wght@300;400;500;600&display=swap');
+
+/* ── CSS variables ─────────────────────────────────────────────── */
+.overlay {
+  --red:        #C0000A;
+  --red-light:  #E8000C;
+  --red-dim:    rgba(192, 0, 10, 0.08);
+  --red-border: rgba(192, 0, 10, 0.20);
+  --navy:       #0B1324;
+  --navy-mid:   #1A2640;
+  --slate:      #374151;
+  --muted:      #6B7280;
+  --border:     #E5E7EB;
+  --border-mid: #D1D5DB;
+  --bg:         #F8F9FB;
+  --surface:    #FFFFFF;
+  --text:       #111827;
+  --text-sub:   #4B5563;
+
+  position: fixed;
+  inset: 0;
+  background: rgba(11, 19, 36, 0.65);
+  backdrop-filter: blur(20px);
+  -webkit-backdrop-filter: blur(4px);
+  z-index: 1000;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  padding: 24px 16px;
+  opacity: 0;
+  pointer-events: none;
+  transition: opacity 0.22s ease;
+  font-family: 'Barlow', sans-serif;
+}
+
+.overlayVisible {
+  opacity: 1;
+  pointer-events: all;
+}
+
+/* ── Modal shell ───────────────────────────────────────────────── */
+.modal {
+  width: 720px;
+  max-width: 100%;
+  max-height: calc(100vh - 48px);
+  background: var(--surface);
+  border-radius: 6px;
+  border: 1px solid var(--border);
+  box-shadow:
+    0 24px 64px rgba(11, 19, 36, 0.28),
+    0 4px 16px rgba(11, 19, 36, 0.12);
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  animation: modalIn 0.28s cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+.modalWide {
+  width: 860px;
+}
+
+@keyframes modalIn {
+  from { opacity: 0; transform: translateY(20px) scale(0.97); }
+  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+}
+
+/* ── Modal header ──────────────────────────────────────────────── */
+.modalHeader {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 16px 24px 16px;
+  border-bottom: 1px solid var(--border);
+  background: #8b0000;
+  flex-shrink: 0;
+}
+
+.modalHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 20px;
+}
+
+/* Step indicator */
+.steps {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+}
+
+.step {
+  display: flex;
+  align-items: center;
+  gap: 6px;
+  opacity: 0.4;
+  transition: opacity 0.2s;
+}
+
+.stepActive {
+  opacity: 1;
+}
+
+.stepDone {
+  opacity: 1;
+}
+
+.stepNum {
+  width: 22px;
+  height: 22px;
+  border-radius: 50%;
+  background: rgba(255, 255, 255, 0.1);
+  border: 1.5px solid rgba(255, 255, 255, 0.25);
+  color: #fff;
+  font-size: 11px;
+  font-weight: 700;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.2s, border-color 0.2s;
+}
+
+.stepActive .stepNum {
+  background: var(--red);
+  border-color: var(--red);
+}
+
+.stepDone .stepNum {
+  background: rgba(46, 160, 67, 0.75);
+  border-color: transparent;
+}
+
+.stepLabel {
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.8px;
+  text-transform: uppercase;
+  color: #fff;
+}
+
+.stepConnector {
+  width: 28px;
+  height: 1.5px;
+  background: rgba(255, 255, 255, 0.15);
+  transition: background 0.3s;
+}
+
+.stepConnectorDone {
+  background: rgba(46, 160, 67, 0.75);
+}
+
+.modalTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 700;
+  letter-spacing: 0.3px;
+  color: #FFFFFF;
+  margin: 0;
+}
+
+.closeBtn {
+  width: 32px;
+  height: 32px;
+  border: 1px solid rgba(255, 255, 255, 0.15);
+  border-radius: 4px;
+  background: rgba(255, 255, 255, 0.06);
+  color: var(--text-primary);
+  cursor: pointer;
+  font-size: 13px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: background 0.15s, color 0.15s, border-color 0.15s;
+  flex-shrink: 0;
+}
+
+.closeBtn:hover {
+  background: #F3F4F6;
+  color: var(--slate);
+}
+
+/* ── Modal body ────────────────────────────────────────────────── */
+.modalBody {
+  overflow-y: auto;
+  flex: 1;
+  background: var(--bg);
+}
+
+.modalBody::-webkit-scrollbar       { width: 6px; }
+.modalBody::-webkit-scrollbar-track { background: transparent; }
+.modalBody::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+
+/* ═══════════════════════════════════════════════════════════════
+   REVIEW PHASE
+══════════════════════════════════════════════════════════════ */
+
+.reviewBody {
+  padding: 20px 24px 0;
+}
+
+/* Category badge */
+.categoryBadge {
+  display: inline-flex;
+  align-items: center;
+  gap: 7px;
+  background: var(--red-dim);
+  border: 1px solid var(--red-border);
+  border-radius: 100px;
+  padding: 4px 12px 4px 8px;
+  font-size: 11px;
+  font-weight: 600;
+  letter-spacing: 0.5px;
+  color: var(--red);
+  text-transform: uppercase;
+  margin-bottom: 20px;
+}
+
+.categoryDot {
+  width: 7px;
+  height: 7px;
+  border-radius: 50%;
+  background: var(--red);
+}
+
+/* Section */
+.section {
+  background: var(--surface);
+  border: 1px solid var(--border);
+  border-radius: 6px;
+  margin-bottom: 12px;
+  overflow: hidden;
+  animation: sectionIn 0.3s var(--delay, 0s) cubic-bezier(0.22, 1, 0.36, 1) both;
+}
+
+@keyframes sectionIn {
+  from { opacity: 0; transform: translateY(8px); }
+  to   { opacity: 1; transform: translateY(0);   }
+}
+
+.sectionHead {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  padding: 10px 16px;
+  background: #1d1919;
+  border: var(--accent);
+  /* border-bottom: 1px solid var(--border); */
+}
+
+.sectionIcon {
+  font-size: 14px;
+}
+
+.sectionTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #FFFFFF;
+  margin: 0;
+  flex: 1;
+}
+
+.sectionCount {
+  font-size: 10px;
+  font-weight: 500;
+  color: var(--text-primary);
+  letter-spacing: 0.3px;
+}
+
+/* Data grid */
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 0;
+}
+
+.cell {
+  padding: 10px 16px;
+  /* border-right: 1px solid var(--border); */
+  border-bottom: 1px solid var(--border);
+  display: flex;
+  flex-direction: column;
+  gap: 2px;
+  transition: background 0.15s;
+}
+
+.cell:nth-child(2n) {
+  border-right: none;
+}
+
+.cell:hover {
+  background: rgba(192, 0, 10, 0.025);
+}
+
+/* Full-width cells for long values */
+.cellFull {
+  grid-column: 1 / -1;
+  border-right: none;
+}
+
+.cellLabel {
+  font-size: 10px;
+  font-weight: 600;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  color: var(--muted);
+}
+
+.cellValue {
+  font-size: 13.5px;
+  font-weight: 500;
+  color: var(--text);
+  line-height: 1.4;
+  word-break: break-word;
+}
+
+/* ── Action bar ────────────────────────────────────────────────── */
+.actionBar {
+  display: flex;
+  align-items: center;
+  gap: 10px;
+  padding: 16px 0 20px;
+  justify-content: flex-end;
+  border-top: 1px solid var(--border);
+  margin-top: 4px;
+  background: var(--bg);
+  position: sticky;
+  bottom: 0;
+}
+
+.cancelBtn {
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: border-color 0.15s, color 0.15s, background 0.15s;
+}
+
+.cancelBtn:hover {
+  border-color: #9CA3AF;
+  color: var(--slate);
+  background: #F3F4F6;
+}
+
+.editBtn {
+  height: 38px;
+  padding: 0 16px;
+  border: 1px solid var(--red-border);
+  border-radius: 4px;
+  background: var(--red-dim);
+  color: var(--red);
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: background 0.15s, border-color 0.15s;
+}
+
+.editBtn:hover {
+  background: rgba(192, 0, 10, 0.12);
+  border-color: rgba(192, 0, 10, 0.35);
+}
+
+.confirmBtn {
+  height: 40px;
+  padding: 0 22px;
+  border: none;
+  border-radius: 4px;
+  background: var(--accent);
+  color: #FFFFFF;
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 14px;
+  font-weight: 700;
+  letter-spacing: 0.6px;
+  text-transform: uppercase;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  position: relative;
+  overflow: hidden;
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+  box-shadow: 0 2px 10px rgba(11, 19, 36, 0.25);
+}
+
+.confirmBtn::after {
+  content: '';
+  position: absolute;
+  left: 0; top: 0; bottom: 0;
+  width: 3px;
+  background: var(--accent-hover);
+}
+
+.confirmBtn:hover:not(:disabled) {
+  background: var(--accent-hover);
+  box-shadow: 0 4px 18px rgba(11, 19, 36, 0.35);
+  transform: translateY(-1px);
+}
+
+.confirmBtn:disabled {
+  opacity: 0.65;
+  cursor: not-allowed;
+}
+
+.spinner {
+  width: 16px;
+  height: 16px;
+  border: 2px solid rgba(255,255,255,0.25);
+  border-top-color: #FFF;
+  border-radius: 50%;
+  animation: spin 0.65s linear infinite;
+  display: inline-block;
+}
+
+@keyframes spin { to { transform: rotate(360deg); } }
+
+/* ═══════════════════════════════════════════════════════════════
+   PRINT PHASE (screen view)
+══════════════════════════════════════════════════════════════ */
+
+.printPhase {
+  display: flex;
+  flex-direction: column;
+  height: 100%;
+}
+
+.printToolbar {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  padding: 12px 24px;
+  background: var(--surface);
+  border-bottom: 1px solid var(--border);
+  flex-shrink: 0;
+  flex-wrap: wrap;
+  gap: 10px;
+}
+
+.printToolbarLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex-wrap: wrap;
+}
+
+.printToolbarRight {
+  display: flex;
+  align-items: center;
+  gap: 8px;
+}
+
+.printSuccessChip {
+  display: inline-flex;
+  align-items: center;
+  gap: 5px;
+  background: rgba(34, 197, 94, 0.10);
+  border: 1px solid rgba(34, 197, 94, 0.25);
+  border-radius: 100px;
+  padding: 3px 10px;
+  font-size: 12px;
+  font-weight: 600;
+  color: #15803D;
+}
+
+.printInfo {
+  font-size: 12px;
+  color: var(--muted);
+}
+
+.printCloseBtn {
+  height: 34px;
+  padding: 0 14px;
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  background: transparent;
+  color: var(--muted);
+  font-size: 12px;
+  font-weight: 500;
+  cursor: pointer;
+  transition: background 0.15s, color 0.15s;
+}
+
+.printCloseBtn:hover {
+  background: #F3F4F6;
+  color: var(--slate);
+}
+
+.printBtn {
+  height: 34px;
+  padding: 0 16px;
+  border: none;
+  border-radius: 4px;
+  background: var(--red);
+  color: #FFF;
+  font-family: 'Barlow', sans-serif;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  display: flex;
+  align-items: center;
+  gap: 7px;
+  box-shadow: 0 2px 8px rgba(192, 0, 10, 0.3);
+  transition: background 0.15s, box-shadow 0.15s, transform 0.1s;
+}
+
+.printBtn:hover {
+  background: var(--red-light);
+  transform: translateY(-1px);
+  box-shadow: 0 4px 14px rgba(192, 0, 10, 0.4);
+}
+
+/* ── Certificate (screen preview) ─────────────────────────────── */
+.printDoc {
+  margin: 20px 24px;
+  background: #FFFFFF;
+  border: 1px solid var(--border-mid);
+  border-radius: 4px;
+  box-shadow: 0 4px 20px rgba(11, 19, 36, 0.08);
+  overflow: hidden;
+  font-family: 'Barlow', sans-serif;
+}
+
+/* Letterhead */
+.docHeader {
+  display: flex;
+  align-items: flex-start;
+  justify-content: space-between;
+  padding: 20px 24px 16px;
+  background: var(--accent-dark);
+  gap: 16px;
+}
+
+.docHeaderLeft {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
+
+.logo {
+  background: #fff;
+  color: var(--accent-dark);
+  font-weight: bolder;
+  font-size: 18px;
+  width: 50px;
+  height: 50px;
+  border-radius: 4px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  letter-spacing: 0.5px;
+}
+
+.docCompany {
+  display: flex;
+  flex-direction: column;
+  gap: 3px;
+}
+
+.docCompanyName {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 17px;
+  font-weight: 800;
+  letter-spacing: 2px;
+  color: #FFFFFF;
+  text-transform: uppercase;
+}
+
+.docCompanyDept {
+  font-size: 10px;
+  font-weight: 500;
+  letter-spacing: 1.5px;
+  color: #fff;
+  text-transform: uppercase;
+}
+
+.docHeaderRight {
+  display: flex;
+  flex-direction: column;
+  align-items: flex-end;
+  gap: 4px;
+}
+
+.docDocTitle {
+  font-family: 'Barlow Condensed', sans-serif;
+  font-size: 13px;
+  font-weight: 700;
+  letter-spacing: 2px;
+  color: rgba(255, 255, 255, 0.85);
+  text-transform: uppercase;
+}
+
+.docDocSub {
+  font-size: 10px;
+  letter-spacing: 1px;
+  text-transform: uppercase;
+  color: #28e46e;
+  background: rgb(253 255 254 / 10%);
+  font-weight: 800;
+  border: 1px solid rgba(192, 0, 10, 0.3);
+  border-radius: 2px;
+  padding: 2px 8px;
+}
+
+.docRedBar {
+  height: 3px;
+  background: linear-gradient(90deg, var(--red) 0%, #FF1A23 50%, rgba(192,0,10,0.2) 100%);
+}
+
+/* Meta strip */
+.docMeta {
+  display: flex;
+  gap: 0;
+  border-bottom: 1px solid var(--border);
+}
+
+.docMeta span {
+  flex: 1;
+  padding: 8px 16px;
+  font-size: 11px;
+  color: var(--muted);
+  border-right: 1px solid var(--border);
+  letter-spacing: 0.2px;
+}
+
+.docMeta span:last-child { border-right: none; }
+.docMeta strong { color: var(--text); font-weight: 600; }
+
+/* Data table */
+.docTable {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 12.5px;
+}
+
+.docTrEven { background: #FFFFFF; }
+.docTrOdd  { background: #F9FAFB; }
+
+.docTdLabel {
+  width: 36%;
+  padding: 8px 16px;
+  font-weight: 600;
+  color: var(--slate);
+  border-right: 1px solid var(--border);
+  border-bottom: 1px solid var(--border);
+  vertical-align: top;
+  font-size: 11.5px;
+  text-transform: uppercase;
+  letter-spacing: 0.3px;
+}
+
+.docTdValue {
+  padding: 12px 16px;
+  color: var(--text);
+  border-bottom: 1px solid var(--border);
+  font-weight: 400;
+  word-break: break-word;
+}
+
+/* Signature block */
+.docSignatures {
+  display: grid;
+  grid-template-columns: repeat(3, 1fr);
+  gap: 0;
+  padding: 24px 24px 20px;
+  border-top: 2px solid var(--navy);
+  margin-top: 8px;
+}
+
+.docSig {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  padding: 0 12px;
+  border-right: 1px solid var(--border);
+  gap: 6px;
+}
+
+.docSig:last-child { border-right: none; }
+
+.docSigLine {
+  width: 80%;
+  height: 1px;
+  background: var(--navy);
+  margin-bottom: 4px;
+}
+
+.docSigName {
+  font-size: 12px;
+  font-weight: 600;
+  color: var(--text);
+  text-align: center;
+  font-family: 'Barlow Condensed', sans-serif;
+  letter-spacing: 0.3px;
+}
+
+.docSigRole {
+  font-size: 10px;
+  color: var(--muted);
+  text-align: center;
+  text-transform: uppercase;
+  letter-spacing: 0.5px;
+}
+
+/* Certificate footer */
+.docFooter {
+  display: flex;
+  justify-content: space-between;
+  align-items: center;
+  padding: 8px 16px;
+  background: var(--accent-dark);
+  font-size: 12px;
+  color: #fff;
+  letter-spacing: 0.3px;
+}
+
+/* Hidden in UI but still rendered for PDF */
+.pdfOnly {
+  position: absolute;
+  left: -9999px;
+  bottom: 0;
+  width: 100%;
+}
+
+/* When generating PDF, make it visible */
+.pdfMode .pdfOnly {
+  position: static;
+}
+
+.footer{
+  width: 100%;
+}
+
+/* ══════════════════════════════════════════════════════════════
+   PRINT MEDIA — clean A4 output
+══════════════════════════════════════════════════════════════ */
+
+@media print {
+  /* Hide everything except the certificate */
+  body > *:not(#printable-cert),
+  .overlay,
+  .printToolbar {
+    display: none !important;
+  }
+
+  /* Make the cert full-page */
+  #printable-cert,
+  .printDoc {
+    margin: 0 !important;
+    box-shadow: none !important;
+    border: none !important;
+    border-radius: 0 !important;
+    width: 100% !important;
+    
+  }
+
+  .docHeader     { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .docRedBar     { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .sectionHead   { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .docTrOdd      { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #F9FAFB !important; }
+  .docFooter     { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+
+  @page {
+    size: A4 portrait;
+    margin: 14mm 16mm;
+  }
+}
+
+/* ── Responsive ────────────────────────────────────────────────── */
+@media (max-width: 640px) {
+  .modal { max-height: 100dvh; border-radius: 0; }
+  .overlay { padding: 0; }
+  .grid { grid-template-columns: 1fr; }
+  .cell { border-right: none; }
+  .docSignatures { grid-template-columns: 1fr; }
+  .docSig { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 0; }
+  .docMeta { flex-direction: column; }
+  .docMeta span { border-right: none; border-bottom: 1px solid var(--border); }
+  .actionBar { flex-wrap: wrap; }
+  .confirmBtn { flex: 1; justify-content: center; }
+}

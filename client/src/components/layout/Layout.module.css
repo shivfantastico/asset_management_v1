@@ -1,0 +1,26 @@
+.appShell {
+  display: flex;
+  height: 100vh;
+  overflow: hidden;
+}
+
+.mainArea {
+  flex: 1;
+  display: flex;
+  flex-direction: column;
+  overflow: hidden;
+  /* background: #8b0000; */
+  background-color: #760000;
+  /* padding: 0px 10px 10px 0px; */
+}
+
+.content {
+  flex: 1;
+  overflow-y: auto;
+  padding: 0px;
+  /* background: var(--bg-primary); */
+}
+
+@media (max-width: 768px) {
+  .content { padding: 16px; }
+}

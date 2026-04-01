@@ -1,0 +1,147 @@
+.tableWrapper {
+  overflow-x: auto;
+  background: white;
+  /* border-radius: 12px; */
+
+}
+
+.table {
+  width: 100%;
+  border-collapse: collapse;
+  font-size: 14px;
+
+}
+
+.th {
+  background: transparent;
+  color: #6B7280;
+  font-size: 12px;
+  font-weight: 700;
+  text-transform: uppercase;
+  padding: 16px 20px;
+  text-align: left;
+  white-space: nowrap;
+  border-bottom: 1px solid #F3F4F6;
+  font-family: var(--font-condensed);
+}
+.table th:nth-child(4) {
+  text-align: center;
+}
+.table th:nth-child(6) {
+  text-align: center;
+}
+
+.table th:nth-child(8) {
+  text-align: center;
+}
+
+
+.table td:nth-child(4) {
+  text-align: center;
+}
+.table td:nth-child(6) {
+  text-align: center;
+}
+.table td:nth-child(8) {
+  text-align: center;
+}
+
+
+
+.thCheckbox {
+  background: transparent;
+  padding: 16px 20px;
+  width: 48px;
+  border-bottom: 1px solid #F3F4F6;
+}
+
+.tr {
+  border-bottom: 1px solid #F3F4F6;
+  transition: background 0.15s ease;
+  font-family: var(--font-condensed);
+  font-weight: 700;
+}
+
+.tr:last-child {
+  border-bottom: none;
+}
+
+.tr:hover {
+  background: var(--text-ternary);
+  
+}
+
+
+
+.td {
+  padding: 15px;
+  color: #111827;
+  vertical-align: middle;
+  font-size: 13px;
+  font-family: var(--font-condensed);
+  font-weight: 700px;
+}
+
+
+.tdCheckbox {
+  padding: 20px;
+  width: 48px;
+}
+
+.checkbox {
+  width: 18px;
+  height: 18px;
+  border: 1.5px solid #D1D5DB;
+  border-radius: 4px;
+  cursor: pointer;
+  accent-color: #10B981;
+}
+
+.checkbox:hover {
+  border-color: #9CA3AF;
+}
+
+/* Loading skeleton */
+.loadingRows {
+  display: flex;
+  flex-direction: column;
+  gap: 8px;
+  padding: 16px;
+}
+
+.skeletonRow {
+  display: flex;
+  gap: 16px;
+  padding: 20px;
+  background: #F9FAFB;
+  border-radius: 8px;
+}
+
+.skeletonCell {
+  flex: 1;
+  height: 16px;
+  background: #E5E7EB;
+  border-radius: 4px;
+  animation: pulse 1.5s ease-in-out infinite;
+}
+
+@keyframes pulse {
+
+  0%,
+  100% {
+    opacity: 0.5;
+  }
+
+  50% {
+    opacity: 0.8;
+  }
+}
+
+.empty {
+  text-align: center;
+  padding: 64px 24px;
+  color: #9CA3AF;
+  font-size: 14px;
+  background: white;
+  border-radius: 12px;
+}
