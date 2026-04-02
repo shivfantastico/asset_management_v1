@@ -49,7 +49,7 @@ const FIELD_LABELS = {
   operating_sys: "Operating System",
   processor: "Processor",
   mac_address: "MAC Address",
-  imei_number: "IMEI Number",
+  imei_no: "IMEI Number",
   phone_number: "Phone Number",
   handover_date: "Handover Date",
   handed_over_by: "Handed Over By",
@@ -84,7 +84,7 @@ const SECTION_DEFS = [
       "operating_sys",
       "processor",
       "mac_address",
-      "imei_number",
+      "imei_no",
       "phone_number",
       "deployed_location",
     ],
@@ -426,8 +426,8 @@ function PrintPhase({ formData, category, onClose }) {
               ...(formData.storage
                 ? [{ label: "Storage", value: formData.storage }]
                 : []),
-              ...(formData.imei_number
-                ? [{ label: "IMEI Number", value: formData.imei_number }]
+              ...(formData.imei_no
+                ? [{ label: "IMEI Number", value: formData.imei_no }]
                 : []),
               ...(formData.phone_number
                 ? [{ label: "Phone Number", value: formData.phone_number }]

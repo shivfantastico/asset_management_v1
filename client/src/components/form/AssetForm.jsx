@@ -137,7 +137,7 @@ const GSM_Phone_FIELD = [
   },
   { name: "make", label: "Make / Brand", type: "text", required: true },
   { name: "model_name", label: "Model Name", type: "text", required: true },
-  { name: "imei_number", label: "IMEI Number", type: "text", required: true },
+  { name: "imei_no", label: "IMEI Number", type: "text", required: true },
   { name: "phone_number", label: "Phone Number", type: "text", required: true },
   {
     name: "deployed_location",
@@ -190,7 +190,7 @@ const TABLET_FIELD = [
     required: true,
   },
   { name: "mac_address", label: "MAC Address", type: "text", required: true },
-  { name: "imei_number", label: "IMEI Number", type: "text", required: true },
+  { name: "imei_no", label: "IMEI Number", type: "text", required: true },
 ];
 
 const DONGLE_FIELD = [
@@ -205,7 +205,7 @@ const DONGLE_FIELD = [
   },
   { name: "make", label: "Make / Brand", type: "text", required: true },
   { name: "model_name", label: "Model Name", type: "text", required: true },
-  { name: "imei_number", label: "IMEI Number", type: "text", required: true },
+  { name: "imei_no", label: "IMEI Number", type: "text", required: true },
 ];
 
 /* Common fields shared by all asset types */
@@ -220,7 +220,8 @@ const COMMON_FIELDS = [
   {
     name: "handed_over_by",
     label: "Handed Over By",
-    type: "text",
+    type: "select",
+    options: [], // will be filled dynamically
     required: true,
   },
   { name: "requested_by", label: "Requested By", type: "text", required: true },
@@ -244,6 +245,7 @@ const COMMON_FIELDS = [
 export default function AssetForm({ onSubmit, isSubmitting }) {
   const [empLoading, setEmpLoading] = useState(false);
   const [empFetched, setEmpFetched] = useState(false);
+  const [user, setUser] = useState([]);
   // console.log(onSubmit)
 
   const {
@@ -264,6 +266,12 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
   /* Reset type-specific fields when category changes */
   useEffect(() => {
     reset({ category });
+    const userObj = JSON.parse(localStorage.getItem("user"));
+    // console.log(userObj);
+
+    if (userObj) {
+      setUser([userObj]); // ✅ store as array
+    }
   }, [category, reset]);
 
   /* Pick fields based on selected category */
@@ -364,6 +372,16 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
     }
 
     if (field.type === "select") {
+      let options = field.options || [];
+      // console.log(user);
+      // 🔥 Inject dynamic users for handed_over_by
+      if (field.name === "handed_over_by") {
+        options = user.map((u) => ({
+          label: `${u.name}`,
+          value: u.name,
+        }));
+      }
+
       return (
         <div key={field.name} className={styles.fieldGroup}>
           <label className={styles.label}>
@@ -378,9 +396,9 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
             className={`${styles.input} ${isError ? styles.inputError : ""}`}
           >
             <option value="">Select {field.label}</option>
-            {field.options.map((opt) => (
-              <option key={opt} value={opt}>
-                {opt.charAt(0).toUpperCase() + opt.slice(1)}
+            {options.map((opt) => (
+              <option key={opt.value || opt} value={opt.value || opt}>
+                {opt.label || opt}
               </option>
             ))}
           </select>
@@ -467,12 +485,13 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
     }
   }, 600);
 
-  const token =
-    "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc0OTI2ODc2LCJleHAiOjE3NzUwMTMyNzZ9.C5xZChCHojrinm0MGoKgbNOC59Yewe25yqOTpy74WoU";
+  // const token =
+  //   "eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwicm9sZSI6ImFkbWluIiwiaWF0IjoxNzc1MTE4NDU0LCJleHAiOjE3NzUyMDQ4NTR9.CYlLULJNw_LxQzUZXDZ081Z4ESro7OklGOpPQRvKHpk"
 
   const debouncedAssetFetch = debounce(async (value) => {
     if (!value) return;
-
+    const token = localStorage.getItem("token")
+    
     try {
       // http://localhost:5000/api/assets/searchSingle/pc?q=PG04FK13
       const res = await axios.get(
@@ -483,9 +502,9 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
           },
         },
       );
-      console.log(res);
+      // console.log(res);
       const data = res.data.data;
-      console.log(data);
+      // console.log(data);
       if (!data) return;
 
       // 🔥 Auto-fill fields
@@ -501,7 +520,7 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
 
   useEffect(() => {
     if (assetCode) {
-      console.log(assetCode);
+      // console.log(assetCode);
       debouncedAssetFetch(assetCode);
     }
     return () => debouncedAssetFetch.cancel();
@@ -509,7 +528,7 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
 
   useEffect(() => {
     if (serialNumber) {
-      console.log(serialNumber);
+      // console.log(serialNumber);
       debouncedAssetFetch(serialNumber);
     }
     return () => debouncedAssetFetch.cancel();
@@ -579,19 +598,19 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
         </div>
         <br />
         {/* Submit */}
-      <div className={styles.formActions}>
-        <button
-          type="submit"
-          className={styles.submitBtn}
-          disabled={isSubmitting}
-        >
-          {isSubmitting ? (
-            <span className={styles.btnSpinner} />
-          ) : (
-            "+ Save Asset"
-          )}
-        </button>
-      </div>
+        <div className={styles.formActions}>
+          <button
+            type="submit"
+            className={styles.submitBtn}
+            disabled={isSubmitting}
+          >
+            {isSubmitting ? (
+              <span className={styles.btnSpinner} />
+            ) : (
+              "+ Save Asset"
+            )}
+          </button>
+        </div>
       </div>
     </form>
   );

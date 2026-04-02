@@ -13,22 +13,24 @@ function App() {
     <ToastProvider>
       <BrowserRouter>
         <Routes>
-          {/* Public */}
-          <Route path="/login" element={<Login />} />
+             {/* Public */}
+            <Route path="/login" element={<Login />} />
 
-          {/* Private Layout */}
-          <Route
-            path="/"
-            element={
-              <PrivateRoute>
-                <Layout />
-              </PrivateRoute>
-            }
-          >
-            <Route path="/assets" element={<Assets />} />
-            <Route path="/assets/add" element={<AddAsset />} />
-            <Route path="/asset/history" element={<AssetHistory/>} />
-          </Route>
+            {/* Private Layout */}
+            <Route
+              path="/"
+              element={
+                <PrivateRoute>
+                  <Layout />
+                </PrivateRoute>
+              }
+            >
+              <Route index element={<Assets />} />  {/* ✅ default */}
+
+              <Route path="assets" element={<Assets />} />
+              <Route path="assets/add" element={<AddAsset />} />
+              <Route path="asset/history" element={<AssetHistory />} />
+            </Route>
         </Routes>
       </BrowserRouter>
     </ToastProvider>

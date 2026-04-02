@@ -81,7 +81,7 @@ export default function Login() {
           },
         },
       );
-      console.log(res);
+      // console.log(res);
       const { token, user } = res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));

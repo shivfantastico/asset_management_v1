@@ -54,7 +54,7 @@ const fmtDate = (iso) => {
 };
 
 const daysBetween = (from, to) => {
-  console.log(from, to)
+  // console.log(from, to)
   const a = new Date(from);
   const b = to ? new Date(to) : new Date();
   const diff = Math.abs(b - a);
@@ -289,7 +289,7 @@ export default function AssetHistory() {
     }
     const controller = new AbortController();
     (async () => {
-      console.log(debouncedQ);
+      // console.log(debouncedQ);
       setSearching(true);
       setSearched(true);
       try {
@@ -339,7 +339,7 @@ export default function AssetHistory() {
   }, [selectedAsset]); // eslint-disable-line
 
   const handleSelectAsset = (item) => {
-    console.log(item)
+    // console.log(item)
     setSelectedAsset(item);
   };
 

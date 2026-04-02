@@ -19,7 +19,7 @@ import styles from '../pages/AddAsset.module.css'
 import axios from '../utils/axios'
 import PizZip from 'pizzip'
 import Docxtemplater from 'docxtemplater'
-import { saveAs } from 'file-saver'
+// import { saveAs } from 'file-saver'
 import AssetReviewModal from "../components/modal/AssetReviewModal"
 
 export default function AddAsset() {
@@ -42,6 +42,7 @@ export default function AddAsset() {
   const handleConfirmed = async(formData)=> {
     setIsSubmitting(true)
     try {
+      // console.log(formData)
       const empid   = formData.emp_id
       const payload = {
         category: formData.category,

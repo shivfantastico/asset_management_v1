@@ -10,7 +10,7 @@ export default function Table({
   emptyMessage = "No data found",
 }) {
 
-  console.log(data) 
+  // console.log(data) 
   if (loading) {
     return (
       <div className={styles.loadingRows}>

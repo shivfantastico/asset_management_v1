@@ -144,7 +144,7 @@ exports.getAssetBySearch = async (req, res) => {
   const { category } = req.params;
   const { q } = req.query;
 
-  console.log(category, q)
+  // console.log(category, q)
 
   if (!q) {
     return res.status(400).json({ error: "Search query required" });
@@ -184,13 +184,12 @@ exports.searchAssets = async (req, res) => {
 // Get History - On Asset Code/ Serial No
 
 
-
 exports.getAssetHistory = async (req, res) => {
   const { category, id } = req.params;
 
   try {
     const data = await assetService.getAssetHistory(category, id);
-    console.log(data)
+    // console.log(data)
     return res.json({ data });
 
   } catch (err) {

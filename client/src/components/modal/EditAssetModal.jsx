@@ -33,43 +33,50 @@ const COMMON_FIELDS = [
     label: "Handover Date",
     type: "date",
     required: true,
+    disabled: false
   },
   {
     name: "handed_over_by",
     label: "Handed Over By",
     type: "text",
     required: true,
+    disabled: true
   },
-  { name: "requested_by", label: "Requested By", type: "text", required: true },
-  { name: "remarks", label: "Remarks", type: "textarea", required: false },
+  { name: "requested_by", label: "Requested By", type: "text", required: true, disabled: false},
+  { name: "remarks", label: "Remarks", type: "textarea", required: false, disabled: false},
   {
     name: "to_date",
     label: "Surrender Date",
     type: "date",
     required: false,
+    disabled: false
   },
   {
     name: "surrendered_to",
     label: "Surrendered To",
-    type: "text",
+    type: "select",
+    options: [],
     required: false,
+    disabled: false
   },
   {
     name: "closing_remark",
     label: "Closing Remarks",
     type: "textarea",
     required: false,
+    disabled: false
   },
 ];
 
 const FIELDS_BY_CATEGORY = {
   pc: [
-    { name: "asset_code", label: "Asset Code", type: "text", required: true },
+    { name: "asset_code", label: "Asset Code", type: "text", required: true, disabled: false },
     {
       name: "serial_number",
       label: "Serial Number",
       type: "text",
       required: true,
+      disabled: false
     },
     {
       name: "asset_type",
@@ -77,6 +84,7 @@ const FIELDS_BY_CATEGORY = {
       type: "select",
       options: ["laptop", "desktop"],
       required: true,
+      disabled: false
     },
     { name: "make", label: "Make / Brand", type: "text", required: true },
     { name: "model_name", label: "Model Name", type: "text", required: true },
@@ -85,6 +93,7 @@ const FIELDS_BY_CATEGORY = {
       label: "Monitor Serial No.",
       type: "text",
       required: false,
+      disabled: false
     },
     {
       name: "ram",
@@ -92,6 +101,7 @@ const FIELDS_BY_CATEGORY = {
       type: "select",
       options: ["4 GB", "8 GB", "16 GB", "32 GB", "64 GB"],
       required: true,
+      disabled: false
     },
     {
       name: "storage",
@@ -107,42 +117,48 @@ const FIELDS_BY_CATEGORY = {
         "1 TB HDD",
       ],
       required: true,
+      disabled: false
     },
     {
       name: "specifications",
       label: "Specifications",
       type: "textarea",
       required: false,
+      disabled: false
     },
     {
       name: "windows_product_key",
       label: "Windows Product Key",
       type: "text",
       required: false,
+      disabled: false
     },
     {
       name: "has_antivirus",
       label: "Antivirus Installed",
       type: "checkbox",
       required: false,
+      disabled: false
     },
     ...COMMON_FIELDS,
   ],
   printer: [
-    { name: "asset_code", label: "Asset Code", type: "text", required: true },
+    { name: "asset_code", label: "Asset Code", type: "text", required: true, disabled: false },
     {
       name: "serial_number",
       label: "Serial Number",
       type: "text",
       required: true,
+      disabled: false
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true },
-    { name: "model_name", label: "Model Name", type: "text", required: true },
+    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
+    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false},
     {
       name: "deployed_location",
       label: "Deployed Location",
       type: "text",
       required: false,
+      disabled: false
     },
     ...COMMON_FIELDS,
   ],
@@ -152,52 +168,59 @@ const FIELDS_BY_CATEGORY = {
       label: "Serial Number",
       type: "text",
       required: true,
+      disabled: false
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true },
-    { name: "model_name", label: "Model Name", type: "text", required: true },
+    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
+    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false},
     {
-      name: "imei_number",
+      name: "imei_no",
       label: "IMEI Number",
       type: "text",
       required: false,
+      disabled: false
     },
     {
       name: "phone_number",
       label: "Phone Number",
       type: "text",
       required: false,
+      disabled: false
     },
     {
       name: "deployed_location",
       label: "Deployed Location",
       type: "text",
       required: false,
+      disabled: false
     },
     ...COMMON_FIELDS,
   ],
   tablet: [
-    { name: "asset_code", label: "Asset Code", type: "text", required: true },
+    { name: "asset_code", label: "Asset Code", type: "text", required: true, disabled: false },
     {
       name: "serial_number",
       label: "Serial Number",
       type: "text",
       required: true,
+      disabled: false
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true },
-    { name: "model_name", label: "Model Name", type: "text", required: true },
+    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
+    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false },
     {
       name: "operating_sys",
       label: "Operating System",
       type: "text",
       required: false,
+      disabled: false
     },
-    { name: "processor", label: "Processor", type: "text", required: false },
+    { name: "processor", label: "Processor", type: "text", required: false, disabled: false},
     {
       name: "ram",
       label: "RAM",
       type: "select",
       options: ["4 GB", "8 GB", "16 GB", "32 GB", "64 GB"],
       required: false,
+      disabled: false
     },
     {
       name: "storage",
@@ -213,18 +236,21 @@ const FIELDS_BY_CATEGORY = {
         "1 TB HDD",
       ],
       required: false,
+      disabled: false
     },
     {
       name: "mac_address",
       label: "MAC Address",
       type: "text",
       required: false,
+      disabled: false
     },
     {
-      name: "imei_number",
+      name: "imei_no",
       label: "IMEI Number",
       type: "text",
       required: false,
+      disabled: false
     },
     ...COMMON_FIELDS,
   ],
@@ -234,14 +260,16 @@ const FIELDS_BY_CATEGORY = {
       label: "Serial Number",
       type: "text",
       required: true,
+      disabled: false
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true },
-    { name: "model_name", label: "Model Name", type: "text", required: true },
+    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
+    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false },
     {
-      name: "imei_number",
+      name: "imei_no",
       label: "IMEI Number",
       type: "text",
       required: false,
+      disabled: false
     },
     ...COMMON_FIELDS,
   ],
@@ -331,7 +359,7 @@ const SECTION_GROUPS = {
         "serial_number",
         "make",
         "model_name",
-        "imei_number",
+        "imei_no",
         "phone_number",
         "deployed_location",
       ],
@@ -363,7 +391,7 @@ const SECTION_GROUPS = {
     {
       title: "Specs & Network",
       icon: "⚙",
-      fields: ["ram", "storage", "mac_address", "imei_number"],
+      fields: ["ram", "storage", "mac_address", "imei_no"],
     },
     {
       title: "Handover Info",
@@ -380,7 +408,7 @@ const SECTION_GROUPS = {
     {
       title: "Device Details",
       icon: "🔌",
-      fields: ["serial_number", "make", "model_name", "imei_number"],
+      fields: ["serial_number", "make", "model_name", "imei_no"],
     },
     {
       title: "Handover Info",
@@ -397,7 +425,7 @@ const SECTION_GROUPS = {
 
 // API field name remappings (DB column → form field name)
 const API_REMAP = {
-  imei_no: "imei_number",
+  // imei_no: "imei_number",
   phone_No: "phone_number",
 };
 
@@ -550,6 +578,19 @@ export default function EditAssetModal({ isOpen, onClose, onSaved, assetRef }) {
   const [errors, setErrors] = useState({});
   const [activeSection, setActiveSection] = useState(0);
 
+  const [userOptions, setUserOptions] = useState([]);
+
+useEffect(() => {
+  const userObj = JSON.parse(localStorage.getItem("user"));
+
+  if (userObj) {
+    // Convert to dropdown format
+    setUserOptions([userObj.name]); 
+    // OR if multiple users:
+    // setUserOptions(userObj.map(u => u.name));
+  }
+}, []);
+
   const overlayRef = useRef(null);
 
   const cat = assetRef?.category;
@@ -569,7 +610,7 @@ export default function EditAssetModal({ isOpen, onClose, onSaved, assetRef }) {
     const controller = new AbortController();
     (async () => {
       setFetching(true);
-      console.log(cat, id);
+      // console.log(cat, id);
       try {
         // /api/assets/searchSingle/${category}?q=${value}
         // /api/assets/${cat}/${id}
@@ -578,6 +619,7 @@ export default function EditAssetModal({ isOpen, onClose, onSaved, assetRef }) {
         });
 
         const raw = res.data?.data ?? res.data ?? {};
+        // console.log(raw)
         setFormData(remapApiData(raw));
       } catch (err) {
         if (err.name !== "CanceledError" && err.code !== "ERR_CANCELED") {
@@ -662,7 +704,7 @@ export default function EditAssetModal({ isOpen, onClose, onSaved, assetRef }) {
 
     try {
       setSubmitting(true);
-      console.log(formData)
+      // console.log(formData)
       const assets = updateAssetStatus(formData)
       await axios.patch(`/api/assets/${cat}/${id}`, assets);
 
@@ -689,9 +731,24 @@ export default function EditAssetModal({ isOpen, onClose, onSaved, assetRef }) {
 
   const currentSection = sections[activeSection];
   const isLast = activeSection === sections.length - 1;
-  const sectionFields = (currentSection?.fields ?? [])
-    .map((fname) => allFields.find((f) => f.name === fname))
-    .filter(Boolean);
+
+const sectionFields = (currentSection?.fields ?? [])
+  .map((fname) => {
+    const field = allFields.find((f) => f.name === fname);
+
+    if (!field) return null;
+
+    // Inject dynamic options
+    if (field.name === "surrendered_to") {
+      return {
+        ...field,
+        options: userOptions,
+      };
+    }
+
+    return field;
+  })
+  .filter(Boolean);
 
   return (
     <>

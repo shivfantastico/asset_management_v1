@@ -212,7 +212,7 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
           assetData.model_name,
           assetData.make,
           assetData.phone_number,
-          assetData.imei_number,
+          assetData.imei_no,
           assetData.serial_number,
           assetData.handover_date,
           assetData.handed_over_by,
@@ -244,7 +244,7 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
           assetData.ram,
           assetData.storage,
           assetData.mac_address,
-          assetData.imei_number,
+          assetData.imei_no,
           assetData.serial_number,
           assetData.asset_code,
           assetData.handover_date,
@@ -270,7 +270,7 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         values = [
           assetData.model_name,
           assetData.make,
-          assetData.imei_number,
+          assetData.imei_no,
           assetData.handover_date,
           assetData.handed_over_by,
           assetData.requested_by,
@@ -305,7 +305,7 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
 exports.searchSingleAsset = async (category, query) => {
   const q = (query || "").trim();
   if (!q) return null;
-  // console.log(category, q)
+
   const meta = CATEGORY_TABLE[category];
   if (!meta) throw new Error("Invalid category");
 
@@ -314,23 +314,30 @@ exports.searchSingleAsset = async (category, query) => {
   let sql;
   let params;
 
-  // 🔥 Handle tables without asset_code
+  const isNumeric = !isNaN(q); // ✅ check if ID
+
   const noAssetCodeTables = ["gsm", "dongle"];
 
   if (noAssetCodeTables.includes(category)) {
-    sql = `
-      SELECT * FROM \`${table}\`
-      WHERE serial_number = ?
-      LIMIT 1
-    `;
-    params = [q];
+    if (isNumeric) {
+      sql = `SELECT * FROM \`${table}\` WHERE id = ? LIMIT 1`;
+      params = [Number(q)];
+    } else {
+      sql = `SELECT * FROM \`${table}\` WHERE serial_number = ? LIMIT 1`;
+      params = [q];
+    }
   } else {
-    sql = `
-      SELECT * FROM \`${table}\`
-      WHERE asset_code = ? OR serial_number = ? OR id = ?
-      LIMIT 1
-    `;
-    params = [q, q, q];
+    if (isNumeric) {
+      sql = `SELECT * FROM \`${table}\` WHERE id = ? LIMIT 1`;
+      params = [Number(q)];
+    } else {
+      sql = `
+        SELECT * FROM \`${table}\`
+        WHERE asset_code = ? OR serial_number = ?
+        LIMIT 1
+      `;
+      params = [q, q];
+    }
   }
 
   const [rows] = await pool.query(sql, params);
@@ -339,6 +346,7 @@ exports.searchSingleAsset = async (category, query) => {
 
   return rows[0];
 };
+
 
 
 
