@@ -16,6 +16,7 @@
 
 import { useState } from "react";
 import { useForm } from "react-hook-form";
+import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import loginBg from "../assets/login_bg_2.jpg";
 import companyLogo from "../assets/lloyds_metals_logo.png";
@@ -59,6 +60,7 @@ const EyeClosed = () => (
 export default function Login() {
   const [showPassword, setShowPassword] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const navigate = useNavigate();
 
   const {
     register,
@@ -82,10 +84,8 @@ export default function Login() {
       console.log(res);
       const { token, user } = res.data;
       localStorage.setItem("token", token);
-      // ✅ Redirect
-      window.location.href = "/assets";
-
-      setIsLoading(false);
+      localStorage.setItem("user", JSON.stringify(user));
+      navigate("/assets", { replace: true });
     } catch (error) {
       console.log(error);
     } finally {
