@@ -168,7 +168,7 @@ export default function Login() {
                 id="email"
                 type="email"
                 className={styles.input}
-                placeholder="you@lloydsmetal.com"
+                placeholder="admin@lloyds.in"
                 autoComplete="email"
                 aria-invalid={!!errors.email}
                 aria-describedby={errors.email ? "email-error" : undefined}
