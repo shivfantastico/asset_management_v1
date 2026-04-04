@@ -27,7 +27,7 @@ import styles from "../modal/AssetReviewModal.module.css";
 
 import html2canvas from "html2canvas";
 import jsPDF from "jspdf";
-import companyFooter from "../../assets/company_footer.jpeg"
+import companyFooter from "../../assets/company_footer.jpeg";
 
 // ── Field label map ────────────────────────────────────────────────
 const FIELD_LABELS = {
@@ -48,9 +48,11 @@ const FIELD_LABELS = {
   deployed_location: "Deployed Location",
   operating_sys: "Operating System",
   processor: "Processor",
+  keyboard_type: "Keyboard Type",
+  mouse_type: "Mouse Type",
   mac_address: "MAC Address",
   imei_no: "IMEI Number",
-  phone_number: "Phone Number",
+  phone_no: "Phone Number",
   handover_date: "Handover Date",
   handed_over_by: "Handed Over By",
   requested_by: "Requested By",
@@ -83,9 +85,11 @@ const SECTION_DEFS = [
       "has_antivirus",
       "operating_sys",
       "processor",
+      "keyboard_type",
+      "mouse_type",
       "mac_address",
       "imei_no",
-      "phone_number",
+      "phone_no",
       "deployed_location",
     ],
   },
@@ -101,9 +105,14 @@ const SECTION_DEFS = [
 const CATEGORY_LABELS = {
   pc: "Computer / Laptop",
   printer: "Printer",
-  gsm: "GSM Phone",
+  gsmphone: "GSM Phone",
   tablet: "Tablet",
-  dongle: "Dongle / Data Card",
+  dongle: "Dongle",
+  keyboard: "Keyboard",
+  mouse: "Mouse",
+  switches: "Switch",
+  firewall: "Firewall",
+  accesspt: "Access Point",
 };
 
 // ── Format a single value for display ─────────────────────────────
@@ -231,83 +240,78 @@ function PrintPhase({ formData, category, onClose }) {
   // const handlePrint = () => window.print();
 
   const handleDownload = async () => {
-  const element = printRef.current;
-  if (!element) return;
+    const element = printRef.current;
+    if (!element) return;
 
-  try {
-    // ✅ Enable PDF mode (makes hidden footer visible)
-    element.classList.add(styles.pdfMode);
+    try {
+      // ✅ Enable PDF mode (makes hidden footer visible)
+      element.classList.add(styles.pdfMode);
 
-    const canvas = await html2canvas(element, {
-      scale: 2,
-      useCORS: true,
-    });
+      const canvas = await html2canvas(element, {
+        scale: 2,
+        useCORS: true,
+      });
 
-    const imgData = canvas.toDataURL("image/png");
+      const imgData = canvas.toDataURL("image/png");
 
-    const pdf = new jsPDF("p", "mm", "a4");
+      const pdf = new jsPDF("p", "mm", "a4");
 
-    const pageWidth = 210;
-    const pageHeight = 297;
+      const pageWidth = 210;
+      const pageHeight = 297;
 
-    const marginTop = 25;
-    const marginLeft = 10;
-    const marginRight = 10;
+      const marginTop = 25;
+      const marginLeft = 10;
+      const marginRight = 10;
 
-    const usableWidth = pageWidth - marginLeft - marginRight;
-    const usableHeight = pageHeight - marginTop - 10;
+      const usableWidth = pageWidth - marginLeft - marginRight;
+      const usableHeight = pageHeight - marginTop - 10;
 
-    const imgWidth = usableWidth;
-    const imgHeight = (canvas.height * imgWidth) / canvas.width;
+      const imgWidth = usableWidth;
+      const imgHeight = (canvas.height * imgWidth) / canvas.width;
 
-    let heightLeft = imgHeight;
-    let position = marginTop;
-
-    pdf.addImage(imgData, "PNG", marginLeft, position, imgWidth, imgHeight);
-
-    heightLeft -= usableHeight;
-
-    while (heightLeft > 0) {
-      pdf.addPage();
-      position = marginTop - imgHeight + (imgHeight - heightLeft);
+      let heightLeft = imgHeight;
+      let position = marginTop;
 
       pdf.addImage(imgData, "PNG", marginLeft, position, imgWidth, imgHeight);
 
       heightLeft -= usableHeight;
+
+      while (heightLeft > 0) {
+        pdf.addPage();
+        position = marginTop - imgHeight + (imgHeight - heightLeft);
+
+        pdf.addImage(imgData, "PNG", marginLeft, position, imgWidth, imgHeight);
+
+        heightLeft -= usableHeight;
+      }
+
+      const now = new Date();
+
+      // Format: 30-Mar-2026_08-45-12-AM
+      const formattedDateTime = now
+        .toLocaleString("en-IN", {
+          day: "2-digit",
+          month: "short",
+          year: "numeric",
+          hour: "2-digit",
+          minute: "2-digit",
+          second: "2-digit",
+          hour12: true,
+        })
+        .replace(/,/g, "") // remove commas
+        .replace(/ /g, "_") // spaces → underscores
+        .replace(/:/g, "-"); // colons → safe for filename
+
+      pdf.save(`Asset_${formData.emp_id}_${formattedDateTime}.pdf`);
+
+      // pdf.save(`Asset_${formData.emp_id}.pdf`);
+
+      // ❗ Remove PDF mode after generation
+      element.classList.remove(styles.pdfMode);
+    } catch (err) {
+      console.error("PDF generation error:", err);
     }
-
-    const now = new Date();
-
-    // Format: 30-Mar-2026_08-45-12-AM
-    const formattedDateTime = now
-      .toLocaleString("en-IN", {
-        day: "2-digit",
-        month: "short",
-        year: "numeric",
-        hour: "2-digit",
-        minute: "2-digit",
-        second: "2-digit",
-        hour12: true,
-      })
-      .replace(/,/g, "")       // remove commas
-      .replace(/ /g, "_")      // spaces → underscores
-      .replace(/:/g, "-");     // colons → safe for filename
-
-    pdf.save(`Asset_${formData.emp_id}_${formattedDateTime}.pdf`);
-
-    pdf.save(`Asset_${formData.emp_id}.pdf`);
-
-    // ❗ Remove PDF mode after generation
-    element.classList.remove(styles.pdfMode);
-
-  } catch (err) {
-    console.error("PDF generation error:", err);
-  }
-};
-
-
-
-
+  };
 
   const date = fmt("handover_date", formData.handover_date);
   const catLabel = CATEGORY_LABELS[category] ?? category;
@@ -422,6 +426,12 @@ function PrintPhase({ formData, category, onClose }) {
               ...(formData.asset_code
                 ? [{ label: "Asset Code", value: formData.asset_code }]
                 : []),
+              ...(formData.keyboard_type
+                ? [{ label: "Keyboard Type", value: formData.keyboard_type }]
+                : []),
+              ...(formData.mouse_type
+                ? [{ label: "Mouse Type", value: formData.mouse_type }]
+                : []),
               ...(formData.ram ? [{ label: "RAM", value: formData.ram }] : []),
               ...(formData.storage
                 ? [{ label: "Storage", value: formData.storage }]
@@ -429,14 +439,17 @@ function PrintPhase({ formData, category, onClose }) {
               ...(formData.imei_no
                 ? [{ label: "IMEI Number", value: formData.imei_no }]
                 : []),
-              ...(formData.phone_number
-                ? [{ label: "Phone Number", value: formData.phone_number }]
+              ...(formData.phone_no
+                ? [{ label: "Phone Number", value: formData.phone_no }]
                 : []),
               ...(formData.mac_address
                 ? [{ label: "MAC Address", value: formData.mac_address }]
                 : []),
               ...(formData.operating_sys
                 ? [{ label: "Operating System", value: formData.operating_sys }]
+                : []),
+              ...(formData.has_antivirus
+                ? [{ label: "Antivirus Installed", value: formData.has_antivirus }]
                 : []),
               ...(formData.windows_product_key
                 ? [
@@ -499,9 +512,13 @@ function PrintPhase({ formData, category, onClose }) {
         </div>
 
         {/* Footer */}
-        
+
         <div className={`${styles.pdfOnly}`}>
-          <img src={companyFooter} alt="companyFooter" className={styles.footer}/>
+          <img
+            src={companyFooter}
+            alt="companyFooter"
+            className={styles.footer}
+          />
         </div>
       </div>
     </div>
@@ -539,6 +556,7 @@ export default function AssetReviewModal({
   if (!isOpen) return null;
 
   const handleConfirm = async () => {
+    // console.log(formData)
     await onConfirm(formData);
     setPhase("print");
   };

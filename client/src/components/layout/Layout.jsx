@@ -1,12 +1,12 @@
 /* Layout - Wraps all pages with Sidebar + Navbar */
-import { useState } from 'react'
-import { Outlet } from 'react-router-dom'
-import Sidebar from '../sidebar/Sidebar'
-import Navbar from '../navbar/Navbar'
-import styles from './Layout.module.css'
+import { useState } from "react";
+import { Outlet } from "react-router-dom";
+import Sidebar from "../sidebar/Sidebar";
+import Navbar from "../navbar/Navbar";
+import styles from "./Layout.module.css";
 
 export default function Layout() {
-  const [sidebarOpen, setSidebarOpen] = useState(false)
+  const [sidebarOpen, setSidebarOpen] = useState(false);
 
   return (
     <div className={styles.appShell}>
@@ -19,5 +19,5 @@ export default function Layout() {
         </main>
       </div>
     </div>
-  )
+  );
 }

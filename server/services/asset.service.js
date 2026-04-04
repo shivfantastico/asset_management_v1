@@ -11,6 +11,13 @@ exports.allAsset = async () => {
       u.asset_pc,
       u.asset_printer,
       u.asset_gsmphone,
+      u.asset_tablet,
+      u.asset_dongle,
+      u.asset_keyboard,
+      u.asset_mouse,
+      u.asset_switches,
+      u.asset_firewall,
+      u.asset_accesspt,
 
       -- PC Fields
       pc.id AS pc_id,
@@ -62,7 +69,52 @@ exports.allAsset = async () => {
       dg.to_date AS dongle_to_date,
       dg.user_verified AS dongle_user_verified,
       dg.serial_number AS dongle_serial,
-      dg.status AS dongle_status
+      dg.status AS dongle_status,
+
+      -- Keyboard Fields
+      k.id AS keyboard_id,
+      k.model_name AS keyboard_model,
+      k.handover_date AS keyboard_handover_date,
+      k.to_date AS keyboard_to_date,
+      k.user_verified AS keyboard_user_verified,
+      k.serial_number AS keyboard_serial,
+      k.status AS keyboard_status,
+
+      -- Mouse Fields
+      m.id AS mouse_id,
+      m.model_name AS mouse_model,
+      m.handover_date AS mouse_handover_date,
+      m.to_date AS mouse_to_date,
+      m.user_verified AS mouse_user_verified,
+      m.serial_number AS mouse_serial,
+      m.status AS mouse_status,
+
+      -- Switch Fields
+      s.id AS switch_id,
+      s.model_name AS switch_model,
+      s.handover_date AS switch_handover_date,
+      s.to_date AS switch_to_date,
+      s.user_verified AS switch_user_verified,
+      s.serial_number AS switch_serial,
+      s.status AS switch_status,
+
+      -- Firewall Fields
+      f.id AS firewall_id,
+      f.model_name AS firewall_model,
+      f.handover_date AS firewall_handover_date,
+      f.to_date AS firewall_to_date,
+      f.user_verified AS firewall_user_verified,
+      f.serial_number AS firewall_serial,
+      f.status AS firewall_status,
+
+      -- Accesspt Fields
+      a.id AS accesspt_id,
+      a.model_name AS accesspt_model,
+      a.handover_date AS accesspt_handover_date,
+      a.to_date AS accesspt_to_date,
+      a.user_verified AS accesspt_user_verified,
+      a.serial_number AS accesspt_serial,
+      a.status AS accesspt_status
 
     FROM users u
     LEFT JOIN asset_pc pc ON pc.user_id = u.id
@@ -70,6 +122,11 @@ exports.allAsset = async () => {
     LEFT JOIN asset_gsmphone gsm ON gsm.user_id = u.id
     LEFT JOIN asset_tablet tab ON tab.user_id = u.id
     LEFT JOIN asset_dongle dg ON dg.user_id = u.id
+    LEFT JOIN asset_keyboard k ON k.user_id = u.id
+    LEFT JOIN asset_mouse m ON m.user_id = u.id
+    LEFT JOIN asset_switches s ON s.user_id = u.id
+    LEFT JOIN asset_firewall f ON f.user_id = u.id
+    LEFT JOIN asset_accesspt a ON a.user_id = u.id
   `;
 
   const [rows] = await pool.query(query);
@@ -107,14 +164,19 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         asset_gsmphone: 0,
         asset_tablet: 0,
         asset_dongle: 0,
+        asset_keyboard: 0,
+        asset_mouse: 0,
+        asset_switches: 0,  
+        asset_firewall: 0,
+        asset_accesspt: 0,
       };
 
       assetFlags[`asset_${category}`] = 1;
 
       const [result] = await conn.query(
         `INSERT INTO users 
-        (emp_id, name, department, asset_pc, asset_printer, asset_gsmphone, asset_tablet, asset_dongle) 
-        VALUES (?, ?, ?, ?, ?, ?, ?, ?)`,
+        (emp_id, name, department, asset_pc, asset_printer, asset_gsmphone, asset_tablet, asset_dongle, asset_keyboard, asset_mouse, asset_switches, asset_firewall, asset_accesspt) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)`,
         [
           empid,
           userData.name,
@@ -124,6 +186,11 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
           assetFlags.asset_gsmphone,
           assetFlags.asset_tablet,
           assetFlags.asset_dongle,
+          assetFlags.asset_keyboard,
+          assetFlags.asset_mouse,
+          assetFlags.asset_switches,
+          assetFlags.asset_firewall,
+          assetFlags.asset_accesspt,
         ],
       );
 
@@ -140,16 +207,17 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         tableName = "asset_pc";
         insertQuery = `
           INSERT INTO ${tableName}
-          (asset_type, serial_number, model_name, make, monitor_serial_number,
+          (asset_type, serial_number, model_name, make, operating_sys, monitor_serial_number,
           has_antivirus, windows_product_key, specifications, ram, storage, asset_code,
           handover_date, handed_over_by, requested_by, remarks, user_verified,status, user_id)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         values = [
           assetData.asset_type,
           assetData.serial_number,
           assetData.model_name,
           assetData.make,
+          assetData.operating_sys,
           assetData.monitor_serial_number || null,
           assetData.has_antivirus,
           assetData.windows_product_key,
@@ -211,7 +279,7 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         values = [
           assetData.model_name,
           assetData.make,
-          assetData.phone_number,
+          assetData.phone_no,
           assetData.imei_no,
           assetData.serial_number,
           assetData.handover_date,
@@ -219,8 +287,8 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
           assetData.requested_by,
           assetData.remarks,
           assetData.user_verified || 0,
-          assetData.status || 1,
           assetData.deployed_location,
+          assetData.status || 1,
           userId,
         ];
         break;
@@ -282,6 +350,148 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         ];
         break;
 
+        case "keyboard":
+        tableName = "asset_keyboard";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, keyboard_type,
+           handover_date,
+           make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+            user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.keyboard_type,
+          assetData.handover_date,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+        case "mouse":
+        tableName = "asset_mouse";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, mouse_type,
+           handover_date,
+           make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+           user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.mouse_type,
+          assetData.handover_date,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+        case "switches":
+        tableName = "asset_switches";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, handover_date,
+           deployed_location, make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+            user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.handover_date,
+          assetData.deployed_location,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+        case "firewall":
+        tableName = "asset_firewall";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, handover_date,
+           deployed_location, make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+            user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.handover_date,
+          assetData.deployed_location,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+        case "accesspt":
+        tableName = "asset_accesspt";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, handover_date,
+           deployed_location, make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+            user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.handover_date,
+          assetData.deployed_location,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
       default:
         throw new Error("Invalid category");
     }
@@ -316,7 +526,7 @@ exports.searchSingleAsset = async (category, query) => {
 
   const isNumeric = !isNaN(q); // ✅ check if ID
 
-  const noAssetCodeTables = ["gsm", "dongle"];
+  const noAssetCodeTables = ["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt"];
 
   if (noAssetCodeTables.includes(category)) {
     if (isNumeric) {
@@ -360,7 +570,7 @@ exports.searchAssets = async (query) => {
 
   // 🔴 STEP 1: Try exact match first
   for (const [category, { table }] of Object.entries(CATEGORY_TABLE)) {
-    const hasAssetCode = !["gsm", "dongle"].includes(category);
+    const hasAssetCode = !["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt"].includes(category);
 
     let sql, params;
 
@@ -410,7 +620,7 @@ exports.searchAssets = async (query) => {
   const results = [];
 
   for (const [category, { table }] of Object.entries(CATEGORY_TABLE)) {
-    const hasAssetCode = !["gsm", "dongle"].includes(category);
+    const hasAssetCode = !["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt"].includes(category);
 
     let sql, params;
 
@@ -547,6 +757,12 @@ exports.updateAsset = async (category, id, updateData) => {
     throw new Error("INVALID_CATEGORY");
   }
 
+  updateData = {
+  ...updateData,
+  to_date: updateData.to_date ? updateData.to_date : null,
+  closing_remark: updateData.closing_remark  ? updateData.closing_remark : null 
+};
+
   const table = meta.table;
 
   // ❌ prevent empty update
@@ -588,6 +804,4 @@ exports.updateAsset = async (category, id, updateData) => {
     updatedFields: fields.map((f) => f.split("=")[0].trim()),
   };
 };
-
-
 

@@ -85,6 +85,7 @@ export default function Login() {
       const { token, user } = res.data;
       localStorage.setItem("token", token);
       localStorage.setItem("user", JSON.stringify(user));
+      // replace
       navigate("/assets", { replace: true });
     } catch (error) {
       console.log(error);
