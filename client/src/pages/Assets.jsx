@@ -326,7 +326,7 @@ export default function Assets() {
               fontSize: 13,
               color: "#111827",
               fontWeight: 700,
-              letterSpacing: "1.1px"
+              letterSpacing: "1.1px",
             }}
           >
             {v}
@@ -425,114 +425,107 @@ export default function Assets() {
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
-   <div className={styles.parentPage}>
-  
-  {/* Top Search */}
-  <div className={styles.filters}>
-    <input
-      type="text"
-      placeholder="Search by code, model, user..."
-      value={search}
-      onChange={(e) => setSearch(e.target.value)}
-      className={styles.searchInput}
-    />
-  </div>
+    <div className={styles.parentPage}>
+      <br />
 
-  <br />
-
-  <div className={styles.page}>
-    
-    {/* Header */}
-    <div className={styles.header}>
-      <div>
-        <h1 className={styles.title}>◈ AssetHub</h1>
-        <p className={styles.subtitle}>
-          {filtered.length} asset{filtered.length !== 1 ? "s" : ""} found
-        </p>
-      </div>
-
-      <button
-        className={styles.addBtn}
-        onClick={() => navigate("/assets/add")}
-      >
-        + Add Asset
-      </button>
-    </div>
-
-    {/* ✅ NEW: Main Layout */}
-    <div className={styles.contentLayout}>
-      
-      {/* 🔹 LEFT SIDEBAR FILTER */}
-      <div className={styles.sidebar}>
-        <AssetFilters
-          selectedCategory={filterCat}
-          onCategoryChange={setFilter}
-          assets={assets}
-          searchValue={search}
-          onSearchChange={setSearch}
-        />
-      </div>
-
-      {/* 🔹 RIGHT TABLE */}
-      <div className={styles.tableSection}>
-        <div className={styles.tableCard}>
-          <Table
-            columns={columns}
-            data={paginated}
-            loading={loading}
-            emptyMessage="No assets match your filters."
-          />
+      <div className={styles.page}>
+        {/* Header */}
+        <div className={styles.header}>
+          <div>
+            <h1 className={styles.title}>◈ AssetHub</h1>
+            <p className={styles.subtitle}>
+              {filtered.length} asset{filtered.length !== 1 ? "s" : ""} found
+            </p>
+          </div>
+          {/* Top Search */}
+          <div className={styles.filters}>
+            <input
+              type="text"
+              placeholder="Search by code, model, user..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
+          <button
+            className={styles.addBtn}
+            onClick={() => navigate("/assets/add")}
+          >
+            + Add Asset
+          </button>
         </div>
 
-        {/* Pagination */}
-        {!loading && totalPages > 1 && (
-          <div className={styles.pagination}>
-            <button
-              className={styles.pageBtn}
-              onClick={() => setPage((p) => Math.max(1, p - 1))}
-              disabled={page === 1}
-            >
-              ← Prev
-            </button>
+        {/* ✅ NEW: Main Layout */}
+        <div className={styles.contentLayout}>
+          {/* 🔹 LEFT SIDEBAR FILTER */}
+          <div className={styles.sidebar}>
+            <AssetFilters
+              selectedCategory={filterCat}
+              onCategoryChange={setFilter}
+              assets={assets}
+              searchValue={search}
+              onSearchChange={setSearch}
+            />
+          </div>
 
-            <div className={styles.pageNumbers}>
-              {(() => {
-                let start = Math.max(1, page - 1);
-                let end = Math.min(totalPages, page + 1);
-
-                if (page === 1) end = Math.min(3, totalPages);
-                else if (page === totalPages)
-                  start = Math.max(totalPages - 2, 1);
-
-                const pages = [];
-                for (let i = start; i <= end; i++) pages.push(i);
-
-                return pages.map((p) => (
-                  <button
-                    key={p}
-                    className={`${styles.pageNum} ${page === p ? styles.pageActive : ""}`}
-                    onClick={() => setPage(p)}
-                  >
-                    {p}
-                  </button>
-                ));
-              })()}
+          {/* 🔹 RIGHT TABLE */}
+          <div className={styles.tableSection}>
+            <div className={styles.tableCard}>
+              <Table
+                columns={columns}
+                data={paginated}
+                loading={loading}
+                emptyMessage="No assets match your filters."
+              />
             </div>
 
-            <button
-              className={styles.pageBtn}
-              onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-              disabled={page === totalPages}
-            >
-              Next →
-            </button>
+            {/* Pagination */}
+            {!loading && totalPages > 1 && (
+              <div className={styles.pagination}>
+                <button
+                  className={styles.pageBtn}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                >
+                  ← Prev
+                </button>
+
+                <div className={styles.pageNumbers}>
+                  {(() => {
+                    let start = Math.max(1, page - 1);
+                    let end = Math.min(totalPages, page + 1);
+
+                    if (page === 1) end = Math.min(3, totalPages);
+                    else if (page === totalPages)
+                      start = Math.max(totalPages - 2, 1);
+
+                    const pages = [];
+                    for (let i = start; i <= end; i++) pages.push(i);
+
+                    return pages.map((p) => (
+                      <button
+                        key={p}
+                        className={`${styles.pageNum} ${page === p ? styles.pageActive : ""}`}
+                        onClick={() => setPage(p)}
+                      >
+                        {p}
+                      </button>
+                    ));
+                  })()}
+                </div>
+
+                <button
+                  className={styles.pageBtn}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                >
+                  Next →
+                </button>
+              </div>
+            )}
           </div>
-        )}
+        </div>
       </div>
-
     </div>
-  </div>
-</div>
-
   );
 }

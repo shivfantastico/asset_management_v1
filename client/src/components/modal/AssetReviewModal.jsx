@@ -449,7 +449,12 @@ function PrintPhase({ formData, category, onClose }) {
                 ? [{ label: "Operating System", value: formData.operating_sys }]
                 : []),
               ...(formData.has_antivirus
-                ? [{ label: "Antivirus Installed", value: formData.has_antivirus }]
+                ? [
+                    {
+                      label: "Antivirus Installed",
+                      value: formData.has_antivirus,
+                    },
+                  ]
                 : []),
               ...(formData.windows_product_key
                 ? [
