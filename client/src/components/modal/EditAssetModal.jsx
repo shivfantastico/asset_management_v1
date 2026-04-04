@@ -33,23 +33,35 @@ const COMMON_FIELDS = [
     label: "Handover Date",
     type: "date",
     required: true,
-    disabled: false
+    disabled: false,
   },
   {
     name: "handed_over_by",
     label: "Handed Over By",
     type: "text",
     required: true,
-    disabled: true
+    disabled: true,
   },
-  { name: "requested_by", label: "Requested By", type: "text", required: true, disabled: false},
-  { name: "remarks", label: "Remarks", type: "textarea", required: false, disabled: false},
+  {
+    name: "requested_by",
+    label: "Requested By",
+    type: "text",
+    required: true,
+    disabled: false,
+  },
+  {
+    name: "remarks",
+    label: "Remarks",
+    type: "textarea",
+    required: false,
+    disabled: false,
+  },
   {
     name: "to_date",
     label: "Surrender Date",
     type: "date",
     required: false,
-    disabled: false
+    disabled: false,
   },
   {
     name: "surrendered_to",
@@ -57,26 +69,32 @@ const COMMON_FIELDS = [
     type: "select",
     options: [],
     required: false,
-    disabled: false
+    disabled: false,
   },
   {
     name: "closing_remark",
     label: "Closing Remarks",
     type: "textarea",
     required: false,
-    disabled: false
+    disabled: false,
   },
 ];
 
 const FIELDS_BY_CATEGORY = {
   pc: [
-    { name: "asset_code", label: "Asset Code", type: "text", required: true, disabled: false },
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
     {
       name: "serial_number",
       label: "Serial Number",
       type: "text",
       required: true,
-      disabled: false
+      disabled: false,
     },
     {
       name: "asset_type",
@@ -84,7 +102,7 @@ const FIELDS_BY_CATEGORY = {
       type: "select",
       options: ["laptop", "desktop"],
       required: true,
-      disabled: false
+      disabled: false,
     },
     { name: "make", label: "Make / Brand", type: "text", required: true },
     { name: "model_name", label: "Model Name", type: "text", required: true },
@@ -93,7 +111,7 @@ const FIELDS_BY_CATEGORY = {
       label: "Monitor Serial No.",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     {
       name: "ram",
@@ -101,7 +119,7 @@ const FIELDS_BY_CATEGORY = {
       type: "select",
       options: ["4 GB", "8 GB", "16 GB", "32 GB", "64 GB"],
       required: true,
-      disabled: false
+      disabled: false,
     },
     {
       name: "storage",
@@ -117,110 +135,171 @@ const FIELDS_BY_CATEGORY = {
         "1 TB HDD",
       ],
       required: true,
-      disabled: false
+      disabled: false,
     },
     {
       name: "specifications",
       label: "Specifications",
       type: "textarea",
       required: false,
-      disabled: false
+      disabled: false,
+    },
+    {
+      name: "operating_sys",
+      label: "Operating System",
+      type: "text",
+      required: false,
+      disabled: false,
     },
     {
       name: "windows_product_key",
       label: "Windows Product Key",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     {
       name: "has_antivirus",
       label: "Antivirus Installed",
       type: "checkbox",
       required: false,
-      disabled: false
+      disabled: false,
     },
     ...COMMON_FIELDS,
   ],
   printer: [
-    { name: "asset_code", label: "Asset Code", type: "text", required: true, disabled: false },
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
     {
       name: "serial_number",
       label: "Serial Number",
       type: "text",
       required: true,
-      disabled: false
+      disabled: false,
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
-    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false},
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
     {
       name: "deployed_location",
       label: "Deployed Location",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     ...COMMON_FIELDS,
   ],
-  gsm: [
+  gsmphone: [
     {
       name: "serial_number",
       label: "Serial Number",
       type: "text",
       required: true,
-      disabled: false
+      disabled: false,
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
-    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false},
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
     {
       name: "imei_no",
       label: "IMEI Number",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     {
-      name: "phone_number",
+      name: "phone_no",
       label: "Phone Number",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     {
       name: "deployed_location",
       label: "Deployed Location",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     ...COMMON_FIELDS,
   ],
   tablet: [
-    { name: "asset_code", label: "Asset Code", type: "text", required: true, disabled: false },
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
     {
       name: "serial_number",
       label: "Serial Number",
       type: "text",
       required: true,
-      disabled: false
+      disabled: false,
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
-    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
     {
       name: "operating_sys",
       label: "Operating System",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
-    { name: "processor", label: "Processor", type: "text", required: false, disabled: false},
+    {
+      name: "processor",
+      label: "Processor",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
     {
       name: "ram",
       label: "RAM",
       type: "select",
       options: ["4 GB", "8 GB", "16 GB", "32 GB", "64 GB"],
       required: false,
-      disabled: false
+      disabled: false,
     },
     {
       name: "storage",
@@ -236,21 +315,21 @@ const FIELDS_BY_CATEGORY = {
         "1 TB HDD",
       ],
       required: false,
-      disabled: false
+      disabled: false,
     },
     {
       name: "mac_address",
       label: "MAC Address",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     {
       name: "imei_no",
       label: "IMEI Number",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
     },
     ...COMMON_FIELDS,
   ],
@@ -260,16 +339,220 @@ const FIELDS_BY_CATEGORY = {
       label: "Serial Number",
       type: "text",
       required: true,
-      disabled: false
+      disabled: false,
     },
-    { name: "make", label: "Make / Brand", type: "text", required: true, disabled: false },
-    { name: "model_name", label: "Model Name", type: "text", required: true, disabled: false },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
     {
       name: "imei_no",
       label: "IMEI Number",
       type: "text",
       required: false,
-      disabled: false
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  keyboard: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "keyboard_type",
+      label: "Keyboard Type",
+      type: "select",
+      options: ["wired", "wireless"],
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  mouse: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "mouse_type",
+      label: "Mouse Type",
+      type: "select",
+      options: ["wired", "wireless"],
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  switches: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "deployed_location",
+      label: "Deployed Location",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  firewall: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "deployed_location",
+      label: "Deployed Location",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  accesspt: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "deployed_location",
+      label: "Deployed Location",
+      type: "text",
+      required: false,
+      disabled: false,
     },
     ...COMMON_FIELDS,
   ],
@@ -278,17 +561,27 @@ const FIELDS_BY_CATEGORY = {
 const CATEGORY_LABELS = {
   pc: "Computer / Laptop",
   printer: "Printer",
-  gsm: "GSM Phone",
+  gsmphone: "GSM Phone",
   tablet: "Tablet",
   dongle: "Dongle",
+  keyboard: "Keyboard",
+  mouse: "Mouse",
+  switches: "Switch",
+  firewall: "Firewall",
+  accesspt: "Access Point",
 };
 
 const CATEGORY_COLORS = {
   pc: "#3B82F6",
   printer: "#8B5CF6",
-  gsm: "#10B981",
+  gsmphone: "#10B981",
   tablet: "#F59E0B",
   dongle: "#EF4444",
+  keyboard: "#b9eb15",
+  mouse: "#3027d7",
+  switches: "#e247c3",
+  firewall: "#3a9cc0",
+  accesspt: "#c2380a",
 };
 
 // Section groupings for the form layout
@@ -313,6 +606,7 @@ const SECTION_GROUPS = {
         "ram",
         "storage",
         "specifications",
+        "operating_sys",
         "windows_product_key",
         "has_antivirus",
       ],
@@ -351,7 +645,7 @@ const SECTION_GROUPS = {
       fields: ["to_date", "surrendered_to", "closing_remark"],
     },
   ],
-  gsm: [
+  gsmphone: [
     {
       title: "Device Details",
       icon: "📱",
@@ -360,7 +654,7 @@ const SECTION_GROUPS = {
         "make",
         "model_name",
         "imei_no",
-        "phone_number",
+        "phone_no",
         "deployed_location",
       ],
     },
@@ -421,12 +715,127 @@ const SECTION_GROUPS = {
       fields: ["to_date", "surrendered_to", "closing_remark"],
     },
   ],
+  keyboard: [
+    {
+      title: "Asset Details",
+      icon: "⌨️",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "keyboard_type",
+        "make",
+        "model_name",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  mouse: [
+    {
+      title: "Asset Details",
+      icon: "🖱️",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "mouse_type",
+        "make",
+        "model_name",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  switches: [
+    {
+      title: "Asset Details",
+      icon: "🔀",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "make",
+        "model_name",
+        "deployed_location",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  firewall: [
+    {
+      title: "Asset Details",
+      icon: "🛡️",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "make",
+        "model_name",
+        "deployed_location",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  accesspt: [
+    {
+      title: "Asset Details",
+      icon: "📡",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "make",
+        "model_name",
+        "deployed_location",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
 };
 
 // API field name remappings (DB column → form field name)
 const API_REMAP = {
   // imei_no: "imei_number",
-  phone_No: "phone_number",
+  phone_no: "phone_no",
 };
 
 function remapApiData(raw) {
@@ -580,16 +989,16 @@ export default function EditAssetModal({ isOpen, onClose, onSaved, assetRef }) {
 
   const [userOptions, setUserOptions] = useState([]);
 
-useEffect(() => {
-  const userObj = JSON.parse(localStorage.getItem("user"));
+  useEffect(() => {
+    const userObj = JSON.parse(localStorage.getItem("user"));
 
-  if (userObj) {
-    // Convert to dropdown format
-    setUserOptions([userObj.name]); 
-    // OR if multiple users:
-    // setUserOptions(userObj.map(u => u.name));
-  }
-}, []);
+    if (userObj) {
+      // Convert to dropdown format
+      setUserOptions([userObj.name]);
+      // OR if multiple users:
+      // setUserOptions(userObj.map(u => u.name));
+    }
+  }, []);
 
   const overlayRef = useRef(null);
 
@@ -671,16 +1080,15 @@ useEffect(() => {
 
   const goPrev = () => setActiveSection((s) => Math.max(s - 1, 0));
 
-
   const updateAssetStatus = (asset) => {
-  if ( asset.to_date && asset.surrendered_to && asset.closing_remark) {
-    asset.status = 0;
-  } else {
-    asset.status = 1; // optional (if you want default active)
-  }
+    if (asset.to_date && asset.surrendered_to && asset.closing_remark) {
+      asset.status = 0;
+    } else {
+      asset.status = 1; // optional (if you want default active)
+    }
 
-  return asset;
-};
+    return asset;
+  };
 
   // ── Submit ─────────────────────────────────────────────────────
   const handleSubmit = async () => {
@@ -705,7 +1113,7 @@ useEffect(() => {
     try {
       setSubmitting(true);
       // console.log(formData)
-      const assets = updateAssetStatus(formData)
+      const assets = updateAssetStatus(formData);
       await axios.patch(`/api/assets/${cat}/${id}`, assets);
 
       showToast("Asset updated successfully!", "success");
@@ -732,23 +1140,23 @@ useEffect(() => {
   const currentSection = sections[activeSection];
   const isLast = activeSection === sections.length - 1;
 
-const sectionFields = (currentSection?.fields ?? [])
-  .map((fname) => {
-    const field = allFields.find((f) => f.name === fname);
+  const sectionFields = (currentSection?.fields ?? [])
+    .map((fname) => {
+      const field = allFields.find((f) => f.name === fname);
 
-    if (!field) return null;
+      if (!field) return null;
 
-    // Inject dynamic options
-    if (field.name === "surrendered_to") {
-      return {
-        ...field,
-        options: userOptions,
-      };
-    }
+      // Inject dynamic options
+      if (field.name === "surrendered_to") {
+        return {
+          ...field,
+          options: userOptions,
+        };
+      }
 
-    return field;
-  })
-  .filter(Boolean);
+      return field;
+    })
+    .filter(Boolean);
 
   return (
     <>

@@ -14,20 +14,32 @@ import { useNavigate } from "react-router-dom";
 import styles from "../pages/Assets.module.css";
 import axios from "../utils/axios";
 import Table from "../components/table/Table";
+
 import { FaLaptop } from "react-icons/fa";
 import { AiFillPrinter } from "react-icons/ai";
 import { CgSmartphoneShake } from "react-icons/cg";
 import { FaTabletScreenButton } from "react-icons/fa6";
 import { GiWifiRouter } from "react-icons/gi";
 import { FaEdit } from "react-icons/fa";
+import { FaRegKeyboard } from "react-icons/fa6";
+import { FaComputerMouse } from "react-icons/fa6";
+import { IoIosSwitch } from "react-icons/io";
+import { BsFillHddNetworkFill } from "react-icons/bs";
+import { TbAccessPoint } from "react-icons/tb";
 
 import EditAssetModal from "../components/modal/EditAssetModal"; // ← NEW
 
 import pc from "../pages/assets/pc.png";
 import printer from "../pages/assets/printer.png";
-import gsm from "../pages/assets/gsm_1.png";
+import gsmphone from "../pages/assets/gsm_1.png";
 import tablet from "../pages/assets/tablet_1.png";
 import dongle from "../pages/assets/dongle_1.png";
+import keyboard from "../pages/assets/keyboard.png";
+import mouse from "../pages/assets/mouse.png";
+import switches from "../pages/assets/switch.png";
+import firewall from "../pages/assets/firewall.png";
+import accesspt from "../pages/assets/accesspt.png";
+import AssetFilters from "../components/filter/AssetFilters";
 
 const PAGE_SIZE = 5;
 
@@ -37,12 +49,22 @@ const getCategoryImage = (category) => {
       return pc;
     case "printer":
       return printer;
-    case "gsm":
-      return gsm;
+    case "gsmphone":
+      return gsmphone;
     case "tablet":
       return tablet;
     case "dongle":
       return dongle;
+    case "keyboard":
+      return keyboard;
+    case "mouse":
+      return mouse;
+    case "switches":
+      return switches;
+    case "firewall":
+      return firewall;
+    case "accesspt":
+      return accesspt;
     default:
       return pc;
   }
@@ -52,9 +74,14 @@ const filterConfig = {
   all: { label: "All" },
   pc: { icon: <FaLaptop className={styles.icon} /> },
   printer: { icon: <AiFillPrinter className={styles.icon} /> },
-  gsm: { icon: <CgSmartphoneShake className={styles.icon} /> },
+  gsmphone: { icon: <CgSmartphoneShake className={styles.icon} /> },
   tablet: { icon: <FaTabletScreenButton className={styles.icon} /> },
   dongle: { icon: <GiWifiRouter className={styles.icon} /> },
+  keyboard: { icon: <FaRegKeyboard className={styles.icon} /> },
+  mouse: { icon: <FaComputerMouse className={styles.icon} /> },
+  switches: { icon: <IoIosSwitch className={styles.icon} /> },
+  firewall: { icon: <BsFillHddNetworkFill className={styles.icon} /> },
+  accesspt: { icon: <TbAccessPoint className={styles.icon} /> },
 };
 
 // ── Helper: format date ───────────────────────────────────────────
@@ -82,6 +109,7 @@ export default function Assets() {
     try {
       const res = await axios.get("/api/assets/all");
       const apiData = res.data.data;
+      // console.log(apiData)
       const flatData = [];
 
       apiData.forEach((user) => {
@@ -120,10 +148,10 @@ export default function Assets() {
         });
 
         // GSM
-        user.assets.gsm.forEach((gsm) => {
+        user.assets.gsmphone.forEach((gsm) => {
           flatData.push({
             id: gsm.id, // ← NEW
-            category: "gsm", // ← NEW
+            category: "gsmphone", // ← NEW
             serial_number: gsm.serial,
             model_name: gsm.model,
             assigned_to: user.name,
@@ -169,6 +197,91 @@ export default function Assets() {
             status: dg.status,
           });
         });
+
+        // Keyboard
+        user.assets.keyboard.forEach((k) => {
+          flatData.push({
+            id: k.id, // ← NEW
+            category: "keyboard", // ← NEW
+            serial_number: k.serial,
+            model_name: k.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(k.handover_dt),
+            to_date: formatDate(k.to_date) || "--",
+            user_verified: k.user_verified,
+            status: k.status,
+          });
+        });
+
+        // Mouse
+        user.assets.mouse.forEach((ms) => {
+          flatData.push({
+            id: ms.id, // ← NEW
+            category: "mouse", // ← NEW
+            serial_number: ms.serial,
+            model_name: ms.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(ms.handover_dt),
+            to_date: formatDate(ms.to_date) || "--",
+            user_verified: ms.user_verified,
+            status: ms.status,
+          });
+        });
+
+        // Switches
+        user.assets.switches.forEach((sw) => {
+          flatData.push({
+            id: sw.id, // ← NEW
+            category: "switches", // ← NEW
+            serial_number: sw.serial,
+            model_name: sw.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(sw.handover_dt),
+            to_date: formatDate(sw.to_date) || "--",
+            user_verified: sw.user_verified,
+            status: sw.status,
+          });
+        });
+
+        // Firewall
+        user.assets.firewall.forEach((fr) => {
+          flatData.push({
+            id: fr.id, // ← NEW
+            category: "firewall", // ← NEW
+            serial_number: fr.serial,
+            model_name: fr.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(fr.handover_dt),
+            to_date: formatDate(fr.to_date) || "--",
+            user_verified: fr.user_verified,
+            status: fr.status,
+          });
+        });
+
+        // Access Pt
+        user.assets.accesspt.forEach((apt) => {
+          flatData.push({
+            id: apt.id, // ← NEW
+            category: "accesspt", // ← NEW
+            serial_number: apt.serial,
+            model_name: apt.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(apt.handover_dt),
+            to_date: formatDate(apt.to_date) || "--",
+            user_verified: apt.user_verified,
+            status: apt.status,
+          });
+        });
       });
 
       setAssets(flatData);
@@ -205,7 +318,7 @@ export default function Assets() {
       {
         key: "serial_number",
         label: "Serial Number",
-        width: 160,
+        width: 120,
         render: (v) => (
           <span
             style={{
@@ -213,6 +326,7 @@ export default function Assets() {
               fontSize: 13,
               color: "#111827",
               fontWeight: 700,
+              letterSpacing: "1.1px"
             }}
           >
             {v}
@@ -311,49 +425,56 @@ export default function Assets() {
   const paginated = filtered.slice((page - 1) * PAGE_SIZE, page * PAGE_SIZE);
 
   return (
-    <div className={styles.parentPage}>
-      {/* Filters */}
-      <div className={styles.filters}>
-        <input
-          type="text"
-          placeholder="Search by code, model, user..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className={styles.searchInput}
-        />
-        <div className={styles.filterTabs}>
-          {["all", "pc", "printer", "gsm", "tablet", "dongle"].map((cat) => (
-            <button
-              key={cat}
-              className={`${styles.filterTab} ${filterCat === cat ? styles.activeTab : ""}`}
-              onClick={() => setFilter(cat)}
-            >
-              {filterConfig[cat]?.label || filterConfig[cat]?.icon}
-            </button>
-          ))}
-        </div>
+   <div className={styles.parentPage}>
+  
+  {/* Top Search */}
+  <div className={styles.filters}>
+    <input
+      type="text"
+      placeholder="Search by code, model, user..."
+      value={search}
+      onChange={(e) => setSearch(e.target.value)}
+      className={styles.searchInput}
+    />
+  </div>
+
+  <br />
+
+  <div className={styles.page}>
+    
+    {/* Header */}
+    <div className={styles.header}>
+      <div>
+        <h1 className={styles.title}>◈ AssetHub</h1>
+        <p className={styles.subtitle}>
+          {filtered.length} asset{filtered.length !== 1 ? "s" : ""} found
+        </p>
       </div>
 
-      <br />
+      <button
+        className={styles.addBtn}
+        onClick={() => navigate("/assets/add")}
+      >
+        + Add Asset
+      </button>
+    </div>
 
-      <div className={styles.page}>
-        {/* Page Header */}
-        <div className={styles.header}>
-          <div>
-            <h1 className={styles.title}>◈ AssetHub</h1>
-            <p className={styles.subtitle}>
-              {filtered.length} asset{filtered.length !== 1 ? "s" : ""} found
-            </p>
-          </div>
-          <button
-            className={styles.addBtn}
-            onClick={() => navigate("/assets/add")}
-          >
-            + Add Asset
-          </button>
-        </div>
+    {/* ✅ NEW: Main Layout */}
+    <div className={styles.contentLayout}>
+      
+      {/* 🔹 LEFT SIDEBAR FILTER */}
+      <div className={styles.sidebar}>
+        <AssetFilters
+          selectedCategory={filterCat}
+          onCategoryChange={setFilter}
+          assets={assets}
+          searchValue={search}
+          onSearchChange={setSearch}
+        />
+      </div>
 
-        {/* Table */}
+      {/* 🔹 RIGHT TABLE */}
+      <div className={styles.tableSection}>
         <div className={styles.tableCard}>
           <Table
             columns={columns}
@@ -379,17 +500,12 @@ export default function Assets() {
                 let start = Math.max(1, page - 1);
                 let end = Math.min(totalPages, page + 1);
 
-                // Ensure always 3 pages if possible
-                if (page === 1) {
-                  end = Math.min(3, totalPages);
-                } else if (page === totalPages) {
+                if (page === 1) end = Math.min(3, totalPages);
+                else if (page === totalPages)
                   start = Math.max(totalPages - 2, 1);
-                }
 
                 const pages = [];
-                for (let i = start; i <= end; i++) {
-                  pages.push(i);
-                }
+                for (let i = start; i <= end; i++) pages.push(i);
 
                 return pages.map((p) => (
                   <button
@@ -414,18 +530,9 @@ export default function Assets() {
         )}
       </div>
 
-      {/* ── NEW: Edit Asset Modal ─────────────────────────────── */}
-      <EditAssetModal
-        isOpen={editModalOpen}
-        onClose={() => {
-          setEditModalOpen(false);
-          setEditTarget(null);
-        }}
-        onSaved={() => {
-          fetchAssets();
-        }} // refetch list after save
-        assetRef={editTarget}
-      />
     </div>
+  </div>
+</div>
+
   );
 }

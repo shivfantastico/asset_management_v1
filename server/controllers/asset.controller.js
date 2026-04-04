@@ -16,9 +16,14 @@ exports.allAssets = async (req, res, next) => {
           assets: {
             pc: [],
             printer: [],
-            gsm: [],
+            gsmphone: [],
             tablet: [],
             dongle: [],
+            keyboard: [],
+            mouse: [],
+            switches: [],
+            firewall: [],
+            accesspt: [],
           },
         };
       }
@@ -55,9 +60,9 @@ exports.allAssets = async (req, res, next) => {
 
       // ✅ GSM
       if (row.gsm_id) {
-        result[row.user_id].assets.gsm.push({
+        result[row.user_id].assets.gsmphone.push({
           id: row.gsm_id,
-          type: "gsm",
+          type: "gsmphone",
           model: row.gsm_model,
           phone: row.gsm_phone,
           imei: row.gsm_imei,
@@ -98,6 +103,76 @@ exports.allAssets = async (req, res, next) => {
           status: row.dongle_status
         });
       }
+
+      // ✅ keyboard
+      if (row.keyboard_id) {
+        result[row.user_id].assets.keyboard.push({
+          id: row.keyboard_id,
+          type: "keyboard",
+          model: row.keyboard_model,
+          serial: row.keyboard_serial,
+          handover_dt: row.keyboard_handover_date,
+          to_date: row.keyboard_to_date,
+          user_verified: row.keyboard_user_verified,
+          status: row.keyboard_status
+        });
+      }
+      // ✅ keyboard
+      if (row.mouse_id) {
+        result[row.user_id].assets.mouse.push({
+          id: row.mouse_id,
+          type: "mouse",
+          model: row.mouse_model,
+          serial: row.mouse_serial,
+          handover_dt: row.mouse_handover_date,
+          to_date: row.mouse_to_date,
+          user_verified: row.mouse_user_verified,
+          status: row.mouse_status
+        });
+      }
+
+      // ✅ switch
+      if (row.switch_id) {
+        result[row.user_id].assets.switches.push({
+          id: row.switch_id,
+          type: "switch",
+          model: row.switch_model,
+          serial: row.switch_serial,
+          handover_dt: row.switch_handover_date,
+          to_date: row.switch_to_date,
+          user_verified: row.switch_user_verified,
+          status: row.switch_status
+        });
+      }
+
+      // ✅ firewall
+      if (row.firewall_id) {
+        result[row.user_id].assets.firewall.push({
+          id: row.firewall_id,
+          type: "firewall",
+          model: row.firewall_model,
+          serial: row.firewall_serial,
+          handover_dt: row.firewall_handover_date,
+          to_date: row.firewall_to_date,
+          user_verified: row.firewall_user_verified,
+          status: row.firewall_status
+        });
+      }
+
+      // ✅ access point
+      if (row.accesspt_id) {
+        result[row.user_id].assets.accesspt.push({
+          id: row.accesspt_id,
+          type: "accesspt",
+          model: row.accesspt_model,
+          serial: row.accesspt_serial,
+          handover_dt: row.accesspt_handover_date,
+          to_date: row.accesspt_to_date,
+          user_verified: row.accesspt_user_verified,
+          status: row.accesspt_status
+        });
+      }
+
     });
 
     res.status(200).json({

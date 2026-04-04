@@ -3,7 +3,7 @@
 export const mockStats = {
   totalUsers: 142,
   totalAssets: 318,
-  assetsByType: { pc: 189, printer: 74, gsm: 38, tablet: 17 },
+  assetsByType: { pc: 189, printer: 74, gsmphone: 38, tablet: 17 },
 }
 
 export const mockRecentActivity = [

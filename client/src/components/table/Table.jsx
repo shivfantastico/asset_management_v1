@@ -1,16 +1,13 @@
 /* Reusable Table Component with pagination */
 import styles from "../table/Table.module.css";
 
-
-
 export default function Table({
   columns,
   data,
   loading,
   emptyMessage = "No data found",
 }) {
-
-  // console.log(data) 
+  // console.log(data)
   if (loading) {
     return (
       <div className={styles.loadingRows}>
@@ -45,7 +42,7 @@ export default function Table({
         </thead>
         <tbody>
           {data.map((row, i) => (
-            <tr key={row.id || i} className={styles.tr}>
+            <tr key={row.serial || i} className={styles.tr}>
               {columns.map((col) => (
                 <td key={col.key} className={styles.td}>
                   {col.render ? col.render(row[col.key], row) : row[col.key]}

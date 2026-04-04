@@ -35,9 +35,14 @@ import styles from "./AssetHistory.module.css";
 const CATEGORY_META = {
   pc: { label: "Computer / Laptop", icon: "🖥", color: "#3B82F6" },
   printer: { label: "Printer", icon: "🖨", color: "#8B5CF6" },
-  gsm: { label: "GSM Phone", icon: "📱", color: "#10B981" },
+  gsmphone: { label: "GSM Phone", icon: "📱", color: "#10B981" },
   tablet: { label: "Tablet", icon: "⬜", color: "#F59E0B" },
   dongle: { label: "Dongle", icon: "🔌", color: "#EF4444" },
+  keyboard: { label: "Keyboard", icon: "⌨️", color: "#b9eb15" },
+  mouse: { label: "Mouse", icon: "🖱️", color: "#3027d7" },
+  switches: { label: "Switch", icon: "🔀", color: "#e247c3" },
+  firewall: { label: "Firewall", icon: "🛡️", color: "#3a9cc0" },
+  accesspt: { label: "Access Point", icon: "📡", color: "#c2380a" },
 };
 
 const fmtDate = (iso) => {
@@ -434,46 +439,45 @@ export default function AssetHistory() {
                   selectedAsset?.category === item.category;
                 return (
                   <div key={`${item.category}-${item.id}`}>
-                  <br />
-                
-                  <li
-                    key={`${item.category}-${item.id}`}
-                    className={`${styles.assetItem} ${sel ? styles.assetItemSelected : ""}`}
-                    style={{ "--idx": idx }}
-                    onClick={() => handleSelectAsset(item)}
-                  >
-                    
-                    <div
-                      className={styles.assetItemIcon}
-                      style={{ "--cat-color": m.color }}
+                    <br />
+
+                    <li
+                      key={`${item.category}-${item.id}`}
+                      className={`${styles.assetItem} ${sel ? styles.assetItemSelected : ""}`}
+                      style={{ "--idx": idx }}
+                      onClick={() => handleSelectAsset(item)}
                     >
-                      {m.icon}
-                    </div>
-                    <div className={styles.assetItemBody}>
-                      <span className={styles.assetItemName}>
-                        {item.model_name || "Unknown Asset"}
-                      </span>
-                      <span className={styles.assetItemCode}>
-                        {
-                          item.asset_code ? ("Asset Code:"+ item.asset_code) : ("Serial No:"+item.serial_number)
-                        }
-                        {/* { "Asset Code:"+ item.asset_code || "Serial No:"+item.serial_number} */}
-                      </span>
-                    </div>
-                    {item.status && (
-                      <span
-                        className={`${styles.statusChip} ${
-                          item.status === "active"
-                            ? styles.statusActive
-                            : item.status === "returned"
-                              ? styles.statusReturned
-                              : styles.statusDefault
-                        }`}
+                      <div
+                        className={styles.assetItemIcon}
+                        style={{ "--cat-color": m.color }}
                       >
-                        {item.status}
-                      </span>
-                    )}
-                  </li>
+                        {m.icon}
+                      </div>
+                      <div className={styles.assetItemBody}>
+                        <span className={styles.assetItemName}>
+                          {item.model_name || "Unknown Asset"}
+                        </span>
+                        <span className={styles.assetItemCode}>
+                          {item.asset_code
+                            ? "Asset Code:" + item.asset_code
+                            : "Serial No:" + item.serial_number}
+                          {/* { "Asset Code:"+ item.asset_code || "Serial No:"+item.serial_number} */}
+                        </span>
+                      </div>
+                      {item.status && (
+                        <span
+                          className={`${styles.statusChip} ${
+                            item.status === "active"
+                              ? styles.statusActive
+                              : item.status === "returned"
+                                ? styles.statusReturned
+                                : styles.statusDefault
+                          }`}
+                        >
+                          {item.status}
+                        </span>
+                      )}
+                    </li>
                   </div>
                 );
               })}
@@ -630,8 +634,11 @@ export default function AssetHistory() {
                                   Current
                                 </span>
                               )}
-                              {idx === detail.history.length - 1 && !entry.is_current && (
-                                  <span className={styles.initialTag}>Initial assign</span>
+                              {idx === detail.history.length - 1 &&
+                                !entry.is_current && (
+                                  <span className={styles.initialTag}>
+                                    Initial assign
+                                  </span>
                                 )}
                             </div>
                           </div>
@@ -670,22 +677,26 @@ export default function AssetHistory() {
                 {[
                   { label: "Category", value: catMeta.label },
                   { label: "Make", value: detail.asset.make },
-                  {label:"Model Name", value: detail.asset.model_name},
+                  { label: "Model Name", value: detail.asset.model_name },
                   { label: "Asset Code", value: detail.asset.asset_code },
                   { label: "Serial Number", value: detail.asset.serial_number },
                   { label: "RAM", value: detail.asset.ram },
                   { label: "Storage", value: detail.asset.storage },
-                  { label: "Operating System", value: detail.asset.operating_sys },
-                  { label:"Processor", value: detail.asset.processor},
-                  {label:"MAC Address", value: detail.asset.mac_address},
-                  {label:"IMEI Number", value: detail.asset.imei_no},
+                  {
+                    label: "Operating System",
+                    value: detail.asset.operating_sys,
+                  },
+                  { label: "Processor", value: detail.asset.processor },
+                  { label: "MAC Address", value: detail.asset.mac_address },
+                  { label: "IMEI Number", value: detail.asset.imei_no },
                   {
                     label: "Specifications",
                     value: detail.asset.specifications,
                   },
                   {
-                    label: "Deployed Location",value: detail.asset.deployed_location
-                  }
+                    label: "Deployed Location",
+                    value: detail.asset.deployed_location,
+                  },
                 ]
                   .filter((r) => r.value)
                   .map((row, i) => (
