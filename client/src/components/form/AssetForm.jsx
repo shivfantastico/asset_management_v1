@@ -386,8 +386,8 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
 
   const category = watch("category");
   // const empId = watch("emp_id");
-  const assetCode = watch("asset_code");
-  const serialNumber = watch("serial_number");
+  // const assetCode = watch("asset_code");
+  // const serialNumber = watch("serial_number");
   // console.log(empId);
 
   /* Reset type-specific fields when category changes */

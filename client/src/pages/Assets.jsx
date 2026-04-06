@@ -303,11 +303,10 @@ export default function Assets() {
 
   // ── NEW: open edit modal ───────────────────────────────────────
   const handleEditClick = useCallback((row) => {
-    console.log(row);
-    // if (!row.id || !row.category) {
-    //   console.warn("Edit clicked but row is missing id or category", row);
-    //   return;
-    // }
+    if (!row.id || !row.category) {
+      console.warn("Edit clicked but row is missing id or category", row);
+      return;
+    }
     setEditTarget({ id: row.id, category: row.category });
     setEditModalOpen(true);
   }, []);
@@ -438,7 +437,7 @@ export default function Assets() {
               {filtered.length} asset{filtered.length !== 1 ? "s" : ""} found
             </p>
           </div>
-          {/* Top Search */}
+
           <div className={styles.filters}>
             <input
               type="text"
@@ -448,6 +447,7 @@ export default function Assets() {
               className={styles.searchInput}
             />
           </div>
+
           <button
             className={styles.addBtn}
             onClick={() => navigate("/assets/add")}
@@ -469,77 +469,65 @@ export default function Assets() {
             />
           </div>
 
-              {/* 🔹 RIGHT TABLE */}
-              <div className={styles.tableSection}>
-                <div className={styles.tableCard}>
-                  <Table
-                    columns={columns}
-                    data={paginated}
-                    loading={loading}
-                    emptyMessage="No assets match your filters."
-                  />
+          {/* 🔹 RIGHT TABLE */}
+          <div className={styles.tableSection}>
+            <div className={styles.tableCard}>
+              <Table
+                columns={columns}
+                data={paginated}
+                loading={loading}
+                emptyMessage="No assets match your filters."
+              />
+            </div>
+
+            {/* Pagination */}
+            {!loading && totalPages > 1 && (
+              <div className={styles.pagination}>
+                <button
+                  className={styles.pageBtn}
+                  onClick={() => setPage((p) => Math.max(1, p - 1))}
+                  disabled={page === 1}
+                >
+                  ← Prev
+                </button>
+
+                <div className={styles.pageNumbers}>
+                  {(() => {
+                    let start = Math.max(1, page - 1);
+                    let end = Math.min(totalPages, page + 1);
+
+                    if (page === 1) end = Math.min(3, totalPages);
+                    else if (page === totalPages)
+                      start = Math.max(totalPages - 2, 1);
+
+                    const pages = [];
+                    for (let i = start; i <= end; i++) pages.push(i);
+
+                    return pages.map((p) => (
+                      <button
+                        key={p}
+                        className={`${styles.pageNum} ${page === p ? styles.pageActive : ""}`}
+                        onClick={() => setPage(p)}
+                      >
+                        {p}
+                      </button>
+                    ));
+                  })()}
                 </div>
 
-                {/* Pagination */}
-                {!loading && totalPages > 1 && (
-                  <div className={styles.pagination}>
-                    <button
-                      className={styles.pageBtn}
-                      onClick={() => setPage((p) => Math.max(1, p - 1))}
-                      disabled={page === 1}
-                    >
-                      ← Prev
-                    </button>
-
-                    <div className={styles.pageNumbers}>
-                      {(() => {
-                        let start = Math.max(1, page - 1);
-                        let end = Math.min(totalPages, page + 1);
-
-                        if (page === 1) end = Math.min(3, totalPages);
-                        else if (page === totalPages)
-                          start = Math.max(totalPages - 2, 1);
-
-                        const pages = [];
-                        for (let i = start; i <= end; i++) pages.push(i);
-
-                        return pages.map((p) => (
-                          <button
-                            key={p}
-                            className={`${styles.pageNum} ${page === p ? styles.pageActive : ""}`}
-                            onClick={() => setPage(p)}
-                          >
-                            {p}
-                          </button>
-                        ));
-                      })()}
-                    </div>
-
-                    <button
-                      className={styles.pageBtn}
-                      onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
-                      disabled={page === totalPages}
-                    >
-                      Next →
-                    </button>
-                  </div>
-                )}
+                <button
+                  className={styles.pageBtn}
+                  onClick={() => setPage((p) => Math.min(totalPages, p + 1))}
+                  disabled={page === totalPages}
+                >
+                  Next →
+                </button>
               </div>
-            </div>
+            )}
           </div>
+        </div>
+      </div>
       {/* ── NEW: Edit Asset Modal ─────────────────────────────── */}
-      <EditAssetModal
-        isOpen={editModalOpen}
-        onClose={() => {
-          setEditModalOpen(false);
-          setEditTarget(null);
-        }}
-        onSaved={() => {
-          fetchAssets();
-        }} // refetch list after save
-        assetRef={editTarget}
-      />
-          {/* ── NEW: Edit Asset Modal ─────────────────────────────── */}
       <EditAssetModal
         isOpen={editModalOpen}
         onClose={() => {

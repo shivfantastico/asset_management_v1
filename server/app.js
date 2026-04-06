@@ -1,10 +1,10 @@
 const express = require("express");
 const cors = require("cors");
 const userRoutes = require("./routes/user.routes");
-const assetsRoutes = require("./routes/asset.routes")
-
+const assetsRoutes = require("./routes/asset.routes");
 
 const app = express();
+// app.use(cors({}))
 
 const envOrigins = (process.env.CLIENT_ORIGINS || "http://10.23.33.13:82")
   .split(",")
@@ -21,13 +21,12 @@ app.use(
       return callback(new Error(`CORS blocked for origin: ${origin}`));
     },
     credentials: true,
-  })
+  }),
 );
 
 app.use(express.json());
 
 app.use("/api/admin", userRoutes);
-app.use("/api/assets", assetsRoutes)
-
+app.use("/api/assets", assetsRoutes);
 
 module.exports = app;
