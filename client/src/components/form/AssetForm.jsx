@@ -8,8 +8,7 @@ import { useForm } from "react-hook-form";
 import styles from "./AssetForm.module.css";
 import { useState } from "react";
 import debounce from "lodash.debounce";
-import axios from "axios";
-// import axios from "../utils/axios";
+import axios from "../../utils/axios";
 import { Oval } from "react-loader-spinner";
 
 import pc from "../../pages/assets/pc.png";
@@ -658,18 +657,11 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
 
   const debouncedAssetFetch = debounce(async (value) => {
     if (!value) return;
-    const token = localStorage.getItem("token");
 
     try {
-      // http://localhost:5000/api/assets/searchSingle/pc?q=PG04FK13
-      const res = await axios.get(
-        `http://localhost:5000/api/assets/searchSingle/${category}?q=${value}`,
-        {
-          headers: {
-            Authorization: `Bearer ${token}`,
-          },
-        },
-      );
+      const res = await axios.get(`/api/assets/searchSingle/${category}`, {
+        params: { q: value },
+      });
       // console.log(res);
       const data = res.data.data;
       // console.log(data);

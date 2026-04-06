@@ -20,7 +20,7 @@ import { useNavigate } from "react-router-dom";
 import styles from "./Login.module.css";
 import loginBg from "../assets/login_bg_2.jpg";
 import companyLogo from "../assets/lloyds_metals_logo.png";
-import axios from "axios";
+import api from "../utils/axios";
 
 // ── Eye icons ─────────────────────────────────────────────────────
 const EyeOpen = () => (
@@ -71,16 +71,7 @@ export default function Login() {
   const onSubmit = async (data) => {
     setIsLoading(true);
     try {
-      setIsLoading(true);
-      const res = await axios.post(
-        `${import.meta.env.VITE_API_URL}/api/admin/login`,
-        data,
-        {
-          headers: {
-            "Content-Type": "application/json",
-          },
-        },
-      );
+      const res = await api.post("/api/admin/login", data);
       // console.log(res);
       const { token, user } = res.data;
       localStorage.setItem("token", token);

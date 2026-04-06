@@ -103,8 +103,8 @@
 }
 
 .searchInput {
-  width: 300px;
-  background: rgb(255 255 255 / 15%);
+  width: 400px;
+  background: linear-gradient(135deg, #bb0911 0%, #d8dee2 100%);
   color: var(--text-primary);
   border: 1px solid rgb(255 7 7 / 20%);
   border-radius: 15px;
