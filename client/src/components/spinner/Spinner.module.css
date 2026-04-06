@@ -4,9 +4,23 @@
   border-top-color: var(--accent);
   animation: spin 0.7s linear infinite;
 }
-.sm { width: 16px; height: 16px; }
-.md { width: 28px; height: 28px; border-width: 3px; }
-.lg { width: 44px; height: 44px; border-width: 3px; }
+
+.sm {
+  width: 16px;
+  height: 16px;
+}
+
+.md {
+  width: 28px;
+  height: 28px;
+  border-width: 3px;
+}
+
+.lg {
+  width: 44px;
+  height: 44px;
+  border-width: 3px;
+}
 
 .fullPage {
   display: flex;
@@ -16,4 +30,8 @@
   min-height: 300px;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}

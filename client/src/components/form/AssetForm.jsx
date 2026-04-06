@@ -710,7 +710,12 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
           {[
             { value: "pc", label: "PC / Laptop", icon: "💻" },
             { value: "printer", label: "Printer", icon: "🖨️" },
-            { value: "gsmphone", label: "GSM Phone", icon: "📱", disabled: false },
+            {
+              value: "gsmphone",
+              label: "GSM Phone",
+              icon: "📱",
+              disabled: false,
+            },
             { value: "tablet", label: "Tablet", icon: "📟", disabled: false },
             { value: "dongle", label: "Dongle", icon: "🔌", disabled: false },
             {

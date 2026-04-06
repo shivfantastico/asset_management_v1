@@ -5,8 +5,8 @@
  * Includes asset counts and logical grouping
  */
 
-import { useState, useMemo } from 'react';
-import styles from './AssetFilters.module.css';
+import { useState, useMemo } from "react";
+import styles from "./AssetFilters.module.css";
 
 // Icons (you already have these imported)
 import { FaLaptop } from "react-icons/fa";
@@ -23,17 +23,17 @@ import { TbAccessPoint } from "react-icons/tb";
 
 const CATEGORY_GROUPS = {
   computing: {
-    label: 'Computing Devices',
-    categories: ['pc', 'tablet', 'printer']
+    label: "Computing Devices",
+    categories: ["pc", "tablet", "printer"],
   },
   peripherals: {
-    label: 'Peripherals',
-    categories: ['keyboard', 'mouse']
+    label: "Peripherals",
+    categories: ["keyboard", "mouse"],
   },
   network: {
-    label: 'Network Equipment',
-    categories: ['switches', 'firewall', 'accesspt', 'dongle', 'gsmphone']
-  }
+    label: "Network Equipment",
+    categories: ["switches", "firewall", "accesspt", "dongle", "gsmphone"],
+  },
 };
 
 const CATEGORY_CONFIG = {
@@ -50,25 +50,25 @@ const CATEGORY_CONFIG = {
   accesspt: { label: "Access Points", icon: <TbAccessPoint /> },
 };
 
-export default function AssetFilters({ 
-  selectedCategory, 
-  onCategoryChange, 
+export default function AssetFilters({
+  selectedCategory,
+  onCategoryChange,
   assets,
   searchValue,
-  onSearchChange 
+  onSearchChange,
 }) {
   const [isMobileMenuOpen, setIsMobileMenuOpen] = useState(false);
 
   // Calculate counts per category
   const categoryCounts = useMemo(() => {
     const counts = { all: assets.length };
-    
-    Object.keys(CATEGORY_CONFIG).forEach(cat => {
-      if (cat !== 'all') {
-        counts[cat] = assets.filter(a => a.category === cat).length;
+
+    Object.keys(CATEGORY_CONFIG).forEach((cat) => {
+      if (cat !== "all") {
+        counts[cat] = assets.filter((a) => a.category === cat).length;
       }
     });
-    
+
     return counts;
   }, [assets]);
 
@@ -85,8 +85,8 @@ export default function AssetFilters({
       {/* All Assets */}
       <div className={styles.filterSection}>
         <button
-          className={`${styles.filterItem} ${selectedCategory === 'all' ? styles.active : ''}`}
-          onClick={() => onCategoryChange('all')}
+          className={`${styles.filterItem} ${selectedCategory === "all" ? styles.active : ""}`}
+          onClick={() => onCategoryChange("all")}
         >
           <span className={styles.filterIcon}>◈</span>
           <span className={styles.filterLabel}>All Assets</span>
@@ -98,11 +98,11 @@ export default function AssetFilters({
       {Object.entries(CATEGORY_GROUPS).map(([groupKey, group]) => (
         <div key={groupKey} className={styles.filterSection}>
           <div className={styles.groupLabel}>{group.label}</div>
-          
-          {group.categories.map(category => (
+
+          {group.categories.map((category) => (
             <button
               key={category}
-              className={`${styles.filterItem} ${selectedCategory === category ? styles.active : ''}`}
+              className={`${styles.filterItem} ${selectedCategory === category ? styles.active : ""}`}
               onClick={() => onCategoryChange(category)}
             >
               <span className={styles.filterIcon}>
@@ -120,11 +120,11 @@ export default function AssetFilters({
       ))}
 
       {/* Clear Filters */}
-      {selectedCategory !== 'all' && (
+      {selectedCategory !== "all" && (
         <div className={styles.sidebarFooter}>
           <button
             className={styles.clearBtn}
-            onClick={() => onCategoryChange('all')}
+            onClick={() => onCategoryChange("all")}
           >
             Clear Filter
           </button>
@@ -151,10 +151,10 @@ export default function AssetFilters({
         onClick={() => setIsMobileMenuOpen(!isMobileMenuOpen)}
       >
         <span className={styles.dropdownIcon}>
-          {CATEGORY_CONFIG[selectedCategory]?.icon || '◈'}
+          {CATEGORY_CONFIG[selectedCategory]?.icon || "◈"}
         </span>
         <span className={styles.dropdownLabel}>
-          {CATEGORY_CONFIG[selectedCategory]?.label || 'All Assets'}
+          {CATEGORY_CONFIG[selectedCategory]?.label || "All Assets"}
         </span>
         <span className={styles.dropdownCount}>
           ({categoryCounts[selectedCategory] || 0})
@@ -165,7 +165,7 @@ export default function AssetFilters({
       {/* Mobile Menu */}
       {isMobileMenuOpen && (
         <>
-          <div 
+          <div
             className={styles.mobileOverlay}
             onClick={() => setIsMobileMenuOpen(false)}
           />
@@ -183,9 +183,9 @@ export default function AssetFilters({
             <div className={styles.mobileMenuContent}>
               {/* All */}
               <button
-                className={`${styles.mobileMenuItem} ${selectedCategory === 'all' ? styles.active : ''}`}
+                className={`${styles.mobileMenuItem} ${selectedCategory === "all" ? styles.active : ""}`}
                 onClick={() => {
-                  onCategoryChange('all');
+                  onCategoryChange("all");
                   setIsMobileMenuOpen(false);
                 }}
               >
@@ -198,10 +198,10 @@ export default function AssetFilters({
               {Object.entries(CATEGORY_GROUPS).map(([groupKey, group]) => (
                 <div key={groupKey} className={styles.mobileGroup}>
                   <div className={styles.mobileGroupLabel}>{group.label}</div>
-                  {group.categories.map(category => (
+                  {group.categories.map((category) => (
                     <button
                       key={category}
-                      className={`${styles.mobileMenuItem} ${selectedCategory === category ? styles.active : ''}`}
+                      className={`${styles.mobileMenuItem} ${selectedCategory === category ? styles.active : ""}`}
                       onClick={() => {
                         onCategoryChange(category);
                         setIsMobileMenuOpen(false);

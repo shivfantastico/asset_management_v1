@@ -24,7 +24,8 @@
 
 /* Control the image size instead */
 .logo img {
-  width: 200px;   /* adjust based on your logo */
+  width: 200px;
+  /* adjust based on your logo */
   height: auto;
   object-fit: contain;
 }
@@ -78,7 +79,9 @@
   flex-shrink: 0;
 }
 
-.navText { flex: 1; }
+.navText {
+  flex: 1;
+}
 
 .sidebarFooter {
   padding: 16px 20px;
@@ -105,13 +108,15 @@
     z-index: 1000;
     transform: translateX(-100%);
   }
+
   .sidebar.open {
     transform: translateX(0);
   }
+
   .overlay {
     position: fixed;
     inset: 0;
-    background: rgba(0,0,0,0.6);
+    background: rgba(0, 0, 0, 0.6);
     z-index: 999;
   }
 }

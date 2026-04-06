@@ -11,20 +11,20 @@
 
 /* ── CSS variables ─────────────────────────────────────────────── */
 .overlay {
-  --red:        #C0000A;
-  --red-light:  #E8000C;
-  --red-dim:    rgba(192, 0, 10, 0.08);
+  --red: #C0000A;
+  --red-light: #E8000C;
+  --red-dim: rgba(192, 0, 10, 0.08);
   --red-border: rgba(192, 0, 10, 0.20);
-  --navy:       #0B1324;
-  --navy-mid:   #1A2640;
-  --slate:      #374151;
-  --muted:      #6B7280;
-  --border:     #E5E7EB;
+  --navy: #0B1324;
+  --navy-mid: #1A2640;
+  --slate: #374151;
+  --muted: #6B7280;
+  --border: #E5E7EB;
   --border-mid: #D1D5DB;
-  --bg:         #F8F9FB;
-  --surface:    #FFFFFF;
-  --text:       #111827;
-  --text-sub:   #4B5563;
+  --bg: #F8F9FB;
+  --surface: #FFFFFF;
+  --text: #111827;
+  --text-sub: #4B5563;
 
   position: fixed;
   inset: 0;
@@ -69,8 +69,15 @@
 }
 
 @keyframes modalIn {
-  from { opacity: 0; transform: translateY(20px) scale(0.97); }
-  to   { opacity: 1; transform: translateY(0)    scale(1);    }
+  from {
+    opacity: 0;
+    transform: translateY(20px) scale(0.97);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0) scale(1);
+  }
 }
 
 /* ── Modal header ──────────────────────────────────────────────── */
@@ -194,9 +201,18 @@
   background: var(--bg);
 }
 
-.modalBody::-webkit-scrollbar       { width: 6px; }
-.modalBody::-webkit-scrollbar-track { background: transparent; }
-.modalBody::-webkit-scrollbar-thumb { background: #D1D5DB; border-radius: 3px; }
+.modalBody::-webkit-scrollbar {
+  width: 6px;
+}
+
+.modalBody::-webkit-scrollbar-track {
+  background: transparent;
+}
+
+.modalBody::-webkit-scrollbar-thumb {
+  background: #D1D5DB;
+  border-radius: 3px;
+}
 
 /* ═══════════════════════════════════════════════════════════════
    REVIEW PHASE
@@ -241,8 +257,15 @@
 }
 
 @keyframes sectionIn {
-  from { opacity: 0; transform: translateY(8px); }
-  to   { opacity: 1; transform: translateY(0);   }
+  from {
+    opacity: 0;
+    transform: translateY(8px);
+  }
+
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
 }
 
 .sectionHead {
@@ -402,7 +425,9 @@
 .confirmBtn::after {
   content: '';
   position: absolute;
-  left: 0; top: 0; bottom: 0;
+  left: 0;
+  top: 0;
+  bottom: 0;
   width: 3px;
   background: var(--accent-hover);
 }
@@ -421,14 +446,18 @@
 .spinner {
   width: 16px;
   height: 16px;
-  border: 2px solid rgba(255,255,255,0.25);
+  border: 2px solid rgba(255, 255, 255, 0.25);
   border-top-color: #FFF;
   border-radius: 50%;
   animation: spin 0.65s linear infinite;
   display: inline-block;
 }
 
-@keyframes spin { to { transform: rotate(360deg); } }
+@keyframes spin {
+  to {
+    transform: rotate(360deg);
+  }
+}
 
 /* ═══════════════════════════════════════════════════════════════
    PRINT PHASE (screen view)
@@ -619,7 +648,7 @@
 
 .docRedBar {
   height: 3px;
-  background: linear-gradient(90deg, var(--red) 0%, #FF1A23 50%, rgba(192,0,10,0.2) 100%);
+  background: linear-gradient(90deg, var(--red) 0%, #FF1A23 50%, rgba(192, 0, 10, 0.2) 100%);
 }
 
 /* Meta strip */
@@ -638,8 +667,14 @@
   letter-spacing: 0.2px;
 }
 
-.docMeta span:last-child { border-right: none; }
-.docMeta strong { color: var(--text); font-weight: 600; }
+.docMeta span:last-child {
+  border-right: none;
+}
+
+.docMeta strong {
+  color: var(--text);
+  font-weight: 600;
+}
 
 /* Data table */
 .docTable {
@@ -648,8 +683,13 @@
   font-size: 12.5px;
 }
 
-.docTrEven { background: #FFFFFF; }
-.docTrOdd  { background: #F9FAFB; }
+.docTrEven {
+  background: #FFFFFF;
+}
+
+.docTrOdd {
+  background: #F9FAFB;
+}
 
 .docTdLabel {
   width: 36%;
@@ -691,7 +731,9 @@
   gap: 6px;
 }
 
-.docSig:last-child { border-right: none; }
+.docSig:last-child {
+  border-right: none;
+}
 
 .docSigLine {
   width: 80%;
@@ -742,7 +784,7 @@
   position: static;
 }
 
-.footer{
+.footer {
   width: 100%;
 }
 
@@ -751,8 +793,9 @@
 ══════════════════════════════════════════════════════════════ */
 
 @media print {
+
   /* Hide everything except the certificate */
-  body > *:not(#printable-cert),
+  body>*:not(#printable-cert),
   .overlay,
   .printToolbar {
     display: none !important;
@@ -766,14 +809,34 @@
     border: none !important;
     border-radius: 0 !important;
     width: 100% !important;
-    
+
   }
 
-  .docHeader     { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .docRedBar     { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .sectionHead   { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
-  .docTrOdd      { -webkit-print-color-adjust: exact; print-color-adjust: exact; background: #F9FAFB !important; }
-  .docFooter     { -webkit-print-color-adjust: exact; print-color-adjust: exact; }
+  .docHeader {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .docRedBar {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .sectionHead {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
+
+  .docTrOdd {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+    background: #F9FAFB !important;
+  }
+
+  .docFooter {
+    -webkit-print-color-adjust: exact;
+    print-color-adjust: exact;
+  }
 
   @page {
     size: A4 portrait;
@@ -783,14 +846,48 @@
 
 /* ── Responsive ────────────────────────────────────────────────── */
 @media (max-width: 640px) {
-  .modal { max-height: 100dvh; border-radius: 0; }
-  .overlay { padding: 0; }
-  .grid { grid-template-columns: 1fr; }
-  .cell { border-right: none; }
-  .docSignatures { grid-template-columns: 1fr; }
-  .docSig { border-right: none; border-bottom: 1px solid var(--border); padding: 12px 0; }
-  .docMeta { flex-direction: column; }
-  .docMeta span { border-right: none; border-bottom: 1px solid var(--border); }
-  .actionBar { flex-wrap: wrap; }
-  .confirmBtn { flex: 1; justify-content: center; }
+  .modal {
+    max-height: 100dvh;
+    border-radius: 0;
+  }
+
+  .overlay {
+    padding: 0;
+  }
+
+  .grid {
+    grid-template-columns: 1fr;
+  }
+
+  .cell {
+    border-right: none;
+  }
+
+  .docSignatures {
+    grid-template-columns: 1fr;
+  }
+
+  .docSig {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+    padding: 12px 0;
+  }
+
+  .docMeta {
+    flex-direction: column;
+  }
+
+  .docMeta span {
+    border-right: none;
+    border-bottom: 1px solid var(--border);
+  }
+
+  .actionBar {
+    flex-wrap: wrap;
+  }
+
+  .confirmBtn {
+    flex: 1;
+    justify-content: center;
+  }
 }

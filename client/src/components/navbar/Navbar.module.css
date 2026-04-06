@@ -21,6 +21,7 @@
   padding: 4px;
   cursor: pointer;
 }
+
 .menuBtn span {
   display: block;
   width: 20px;
@@ -29,9 +30,14 @@
   border-radius: 2px;
   transition: background 0.2s;
 }
-.menuBtn:hover span { background: var(--text-primary); }
 
-.titleArea { flex: 1; }
+.menuBtn:hover span {
+  background: var(--text-primary);
+}
+
+.titleArea {
+  flex: 1;
+}
 
 .pageTitle {
   font-size: 16px;
@@ -60,7 +66,11 @@
   font-family: var(--font-mono);
 }
 
-.actions { display: flex; align-items: center; gap: 12px; }
+.actions {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+}
 
 .avatar {
   width: 32px;
@@ -77,5 +87,7 @@
 }
 
 @media (max-width: 768px) {
-  .menuBtn { display: flex; }
+  .menuBtn {
+    display: flex;
+  }
 }

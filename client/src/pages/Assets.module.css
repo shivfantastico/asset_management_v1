@@ -68,7 +68,7 @@
   border: 1px solid rgba(0, 0, 0, 0.06);
 
   /* 🔥 IMPORTANT: Scroll behavior */
-  max-height: 500px; 
+  max-height: 500px;
   overflow-y: auto;
   overflow-x: hidden;
 
@@ -184,7 +184,7 @@
   color: var(--text-primary);
 }
 
-/* Table card */  
+/* Table card */
 .tableCard {
   /* background: var(--bg-card); */
   border-radius: 16px;
