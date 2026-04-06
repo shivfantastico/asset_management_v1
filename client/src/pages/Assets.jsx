@@ -303,10 +303,11 @@ export default function Assets() {
 
   // ── NEW: open edit modal ───────────────────────────────────────
   const handleEditClick = useCallback((row) => {
-    if (!row.id || !row.category) {
-      console.warn("Edit clicked but row is missing id or category", row);
-      return;
-    }
+    console.log(row);
+    // if (!row.id || !row.category) {
+    //   console.warn("Edit clicked but row is missing id or category", row);
+    //   return;
+    // }
     setEditTarget({ id: row.id, category: row.category });
     setEditModalOpen(true);
   }, []);
@@ -526,6 +527,18 @@ export default function Assets() {
           </div>
         </div>
       </div>
+      {/* ── NEW: Edit Asset Modal ─────────────────────────────── */}
+      <EditAssetModal
+        isOpen={editModalOpen}
+        onClose={() => {
+          setEditModalOpen(false);
+          setEditTarget(null);
+        }}
+        onSaved={() => {
+          fetchAssets();
+        }} // refetch list after save
+        assetRef={editTarget}
+      />
     </div>
   );
 }
