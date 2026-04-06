@@ -257,3 +257,119 @@
 .inputWithLoader {
   position: relative;
 }
+
+
+/* ═══════════════════════════════════════════════════════════════
+   EMPLOYEE INFO BANNER - Add to AssetForm.module.css
+   ═══════════════════════════════════════════════════════════════ */
+
+.employeeBanner {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 16px;
+  background: linear-gradient(135deg, #f0f9ff 0%, #e0f2fe 100%);
+  border: 2px solid #0ea5e9;
+  border-radius: 12px;
+  padding: 16px 20px;
+  margin-bottom: 24px;
+  animation: slideInDown 0.3s ease-out;
+}
+
+@keyframes slideInDown {
+  from {
+    opacity: 0;
+    transform: translateY(-10px);
+  }
+  to {
+    opacity: 1;
+    transform: translateY(0);
+  }
+}
+
+.bannerContent {
+  display: flex;
+  align-items: center;
+  gap: 12px;
+  flex: 1;
+}
+
+.bannerIcon {
+  font-size: 24px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  width: 40px;
+  height: 40px;
+  background: white;
+  border-radius: 50%;
+  box-shadow: 0 2px 4px rgba(0, 0, 0, 0.1);
+}
+
+.bannerText {
+  display: flex;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 8px;
+  font-size: 14px;
+  color: #0c4a6e;
+  line-height: 1.4;
+}
+
+.bannerText strong {
+  font-weight: 600;
+  color: #075985;
+}
+
+.bannerSeparator {
+  color: #7dd3fc;
+  font-weight: bold;
+  margin: 0 4px;
+}
+
+.bannerClearBtn {
+  padding: 8px 16px;
+  background: white;
+  border: 1px solid #0ea5e9;
+  border-radius: 6px;
+  color: #0369a1;
+  font-size: 13px;
+  font-weight: 600;
+  cursor: pointer;
+  transition: all 0.2s;
+  white-space: nowrap;
+}
+
+.bannerClearBtn:hover {
+  background: #0ea5e9;
+  color: white;
+  border-color: #0284c7;
+  transform: translateY(-1px);
+  box-shadow: 0 2px 8px rgba(14, 165, 233, 0.3);
+}
+
+.bannerClearBtn:active {
+  transform: translateY(0);
+}
+
+/* Responsive adjustments */
+@media (max-width: 768px) {
+  .employeeBanner {
+    flex-direction: column;
+    align-items: flex-start;
+    padding: 14px 16px;
+  }
+
+  .bannerContent {
+    width: 100%;
+  }
+
+  .bannerText {
+    font-size: 13px;
+  }
+
+  .bannerClearBtn {
+    width: 100%;
+    padding: 10px;
+  }
+}

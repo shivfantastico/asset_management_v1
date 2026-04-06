@@ -48,7 +48,7 @@ export default function Sidebar({ isOpen, onClose }) {
           <div className={styles.versionBadge}>
             © {new Date().getFullYear()} Lloyds Metals & Energy Ltd.
           </div>
-          <div className={styles.versionBadge}>All Right Reserved.</div>
+          <div className={styles.versionBadge}>All Rights Reserved.</div>
         </div>
       </aside>
     </>

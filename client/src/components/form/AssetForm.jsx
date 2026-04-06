@@ -373,7 +373,6 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
   // const [empLoading, setEmpLoading] = useState(false);
   // const [empFetched, setEmpFetched] = useState(false);
   const [user, setUser] = useState([]);
-  // console.log(onSubmit)
 
   const {
     register,
