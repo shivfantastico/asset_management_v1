@@ -428,7 +428,7 @@ export default function Assets() {
     <div className={styles.parentPage}>
 
       {/* Top Search */}
-      <div className={styles.filters}>
+      {/* <div className={styles.filters}>
         <input
           type="text"
           placeholder="Search by code, model, user..."
@@ -436,7 +436,7 @@ export default function Assets() {
           onChange={(e) => setSearch(e.target.value)}
           className={styles.searchInput}
         />
-      </div>
+      </div> */}
 
       <br />
 
@@ -451,15 +451,15 @@ export default function Assets() {
             </p>
           </div>
 
-                <div className={styles.filters}>
-        <input
-          type="text"
-          placeholder="Search by code, model, user..."
-          value={search}
-          onChange={(e) => setSearch(e.target.value)}
-          className={styles.searchInput}
-        />
-      </div>
+          <div className={styles.filters}>
+            <input
+              type="text"
+              placeholder="Search by code, model, user..."
+              value={search}
+              onChange={(e) => setSearch(e.target.value)}
+              className={styles.searchInput}
+            />
+          </div>
 
           <button
             className={styles.addBtn}
