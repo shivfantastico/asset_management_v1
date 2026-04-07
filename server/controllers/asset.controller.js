@@ -24,6 +24,10 @@ exports.allAssets = async (req, res, next) => {
             switches: [],
             firewall: [],
             accesspt: [],
+            tv: [],
+            server: [],
+            mobile: [],
+            headphone: []
           },
         };
       }
@@ -170,6 +174,62 @@ exports.allAssets = async (req, res, next) => {
           to_date: row.accesspt_to_date,
           user_verified: row.accesspt_user_verified,
           status: row.accesspt_status
+        });
+      }
+
+        // ✅ TV
+      if (row.tv_id) {
+        result[row.user_id].assets.tv.push({
+          id: row.tv_id,
+          type: "tv",
+          model: row.tv_model,
+          serial: row.tv_serial,
+          handover_dt: row.tv_handover_date,
+          to_date: row.tv_to_date,
+          user_verified: row.tv_user_verified,
+          status: row.tv_status
+        });
+      }
+
+        // ✅ Server
+      if (row.server_id) {
+        result[row.user_id].assets.server.push({
+          id: row.server_id,
+          type: "server",
+          model: row.server_model,
+          serial: row.server_serial,
+          handover_dt: row.server_handover_date,
+          to_date: row.server_to_date,
+          user_verified: row.server_user_verified,
+          status: row.server_status
+        });
+      }
+
+        // ✅ Mobile
+      if (row.mobile_id) {
+        result[row.user_id].assets.mobile.push({
+          id: row.mobile_id,
+          type: "mobile",
+          model: row.mobile_model,
+          serial: row.mobile_serial,
+          handover_dt: row.mobile_handover_date,
+          to_date: row.mobile_to_date,
+          user_verified: row.mobile_user_verified,
+          status: row.mobile_status
+        });
+      }
+
+        // ✅ Headphone
+      if (row.headphone_id) {
+        result[row.user_id].assets.headphone.push({
+          id: row.headphone_id,
+          type: "headphone",
+          model: row.headphone_model,
+          serial: row.headphone_serial,
+          handover_dt: row.headphone_handover_date,
+          to_date: row.headphone_to_date,
+          user_verified: row.headphone_user_verified,
+          status: row.headphone_status
         });
       }
 

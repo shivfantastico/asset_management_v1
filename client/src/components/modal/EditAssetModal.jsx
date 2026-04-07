@@ -165,6 +165,20 @@ const FIELDS_BY_CATEGORY = {
       required: false,
       disabled: false,
     },
+    {
+      name: "has_adapter",
+      label: "Adapter",
+      type: "checkbox",
+      required: false,
+      disabled: false,
+    },
+    {
+      name: "has_bag",
+      label: "Bag",
+      type: "checkbox",
+      required: false,
+      disabled: false,
+    },
     ...COMMON_FIELDS,
   ],
   printer: [
@@ -556,6 +570,203 @@ const FIELDS_BY_CATEGORY = {
     },
     ...COMMON_FIELDS,
   ],
+  mobile: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "operating_sys",
+      label: "Operating System",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    {
+      name: "processor",
+      label: "Processor",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    {
+      name: "ram",
+      label: "RAM",
+      type: "select",
+      options: ["4 GB", "8 GB", "16 GB", "32 GB", "64 GB"],
+      required: false,
+      disabled: false,
+    },
+    {
+      name: "storage",
+      label: "Storage",
+      type: "select",
+      options: [
+        "128 GB SSD",
+        "256 GB SSD",
+        "512 GB SSD",
+        "1 TB SSD",
+        "256 GB HDD",
+        "512 GB HDD",
+        "1 TB HDD",
+      ],
+      required: false,
+      disabled: false,
+    },
+    {
+      name: "mac_address",
+      label: "MAC Address",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    {
+      name: "imei_no",
+      label: "IMEI Number",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    {
+      name: "deployed_location",
+      label: "Deployed Location",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  server: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "deployed_location",
+      label: "Deployed Location",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  tv: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "deployed_location",
+      label: "Deployed Location",
+      type: "text",
+      required: false,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
+  headphone: [
+    {
+      name: "asset_code",
+      label: "Asset Code",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "serial_number",
+      label: "Serial Number",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "make",
+      label: "Make / Brand",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    {
+      name: "model_name",
+      label: "Model Name",
+      type: "text",
+      required: true,
+      disabled: false,
+    },
+    ...COMMON_FIELDS,
+  ],
 };
 
 const CATEGORY_LABELS = {
@@ -569,6 +780,10 @@ const CATEGORY_LABELS = {
   switches: "Switch",
   firewall: "Firewall",
   accesspt: "Access Point",
+  tv: "TV",
+  server: "Server",
+  mobile: "Mobile",
+  headphone: "Headphone",
 };
 
 const CATEGORY_COLORS = {
@@ -582,6 +797,10 @@ const CATEGORY_COLORS = {
   switches: "#e247c3",
   firewall: "#3a9cc0",
   accesspt: "#c2380a",
+  tv: "#820707",
+  server: "#b12ac3",
+  mobile: "#1089aa",
+  headphone: "#f08820"
 };
 
 // Section groupings for the form layout
@@ -609,6 +828,8 @@ const SECTION_GROUPS = {
         "operating_sys",
         "windows_product_key",
         "has_antivirus",
+        "has_adapter",
+        "has_bag",
       ],
     },
     {
@@ -817,6 +1038,104 @@ const SECTION_GROUPS = {
         "make",
         "model_name",
         "deployed_location",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  mobile: [
+    {
+      title: "Device Details",
+      icon: "⬜",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "make",
+        "model_name",
+        "operating_sys",
+        "processor",
+        "deployed_location",
+      ],
+    },
+    {
+      title: "Specs & Network",
+      icon: "⚙",
+      fields: ["ram", "storage", "mac_address", "imei_no"],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  tv: [
+    {
+      title: "Asset Details",
+      icon: "⌨️",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "make",
+        "model_name",
+        "deployed_location",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  server: [
+    {
+      title: "Asset Details",
+      icon: "⌨️",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "make",
+        "model_name",
+        "deployed_location",
+      ],
+    },
+    {
+      title: "Handover Info",
+      icon: "📋",
+      fields: ["handover_date", "handed_over_by", "requested_by", "remarks"],
+    },
+    {
+      title: "Surrender Info",
+      icon: "↩",
+      fields: ["to_date", "surrendered_to", "closing_remark"],
+    },
+  ],
+  headphone: [
+    {
+      title: "Asset Details",
+      icon: "⌨️",
+      fields: [
+        "asset_code",
+        "serial_number",
+        "make",
+        "model_name",
       ],
     },
     {

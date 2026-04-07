@@ -43,6 +43,10 @@ const CATEGORY_META = {
   switches: { label: "Switch", icon: "🔀", color: "#e247c3" },
   firewall: { label: "Firewall", icon: "🛡️", color: "#3a9cc0" },
   accesspt: { label: "Access Point", icon: "📡", color: "#c2380a" },
+  tv: { label: "TV", icon: "📺", color: "#820707" },
+  server: { label: "Server", icon: "🗄️", color: "#b12ac3" },
+  mobile: { label: "Mobile", icon: "📞", color: "#1089aa" },
+  headphone: { label: "Headphone", icon: "🎧", color: "#f08820" },
 };
 
 const fmtDate = (iso) => {

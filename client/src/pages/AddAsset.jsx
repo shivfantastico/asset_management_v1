@@ -68,19 +68,19 @@ export default function AddAsset() {
         delimiters: { start: "{", end: "}" },
       });
 
-      // 3. Inject data
-      doc.setData({
-        name: formData.name,
-        emp_id: formData.emp_id,
-        department: formData.department,
-        handover_date: formData.handover_date,
-        handed_over_by: formData.handed_over_by,
-        asset_code: formData.asset_code,
-        serial_number: formData.serial_number,
-        remarks: formData.remarks,
-        specification: formData.model_name,
-        make: formData.make,
-      });
+      //  3. Inject data
+      // doc.setData({
+      //   name: formData.name,
+      //   emp_id: formData.emp_id,
+      //   department: formData.department,
+      //   handover_date: formData.handover_date,
+      //   handed_over_by: formData.handed_over_by,
+      //   asset_code: formData.asset_code,
+      //   serial_number: formData.serial_number,
+      //   remarks: formData.remarks,
+      //   specification: formData.model_name,
+      //   make: formData.make,
+      // });
 
       // 4. Render + download
       doc.render();

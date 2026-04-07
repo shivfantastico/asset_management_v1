@@ -26,6 +26,12 @@ import { FaComputerMouse } from "react-icons/fa6";
 import { IoIosSwitch } from "react-icons/io";
 import { BsFillHddNetworkFill } from "react-icons/bs";
 import { TbAccessPoint } from "react-icons/tb";
+import { FaTv } from "react-icons/fa";
+import { GrServerCluster } from "react-icons/gr";
+import { FaMobileRetro } from "react-icons/fa6";
+import { FaHeadphones } from "react-icons/fa";
+
+
 
 import EditAssetModal from "../components/modal/EditAssetModal"; // ← NEW
 
@@ -39,7 +45,13 @@ import mouse from "../pages/assets/mouse.png";
 import switches from "../pages/assets/switch.png";
 import firewall from "../pages/assets/firewall.png";
 import accesspt from "../pages/assets/accesspt.png";
+import tv from "../pages/assets/tv.png";
+import server from "../pages/assets/server.png";
+import mobile from "../pages/assets/mobile.png";
+import headphone from "../pages/assets/headphone.png";
+
 import AssetFilters from "../components/filter/AssetFilters";
+
 
 const PAGE_SIZE = 5;
 
@@ -65,6 +77,14 @@ const getCategoryImage = (category) => {
       return firewall;
     case "accesspt":
       return accesspt;
+    case "tv":
+      return tv;
+    case "server":
+      return server;
+    case "mobile":
+      return mobile;
+    case "headphone":
+      return headphone;
     default:
       return pc;
   }
@@ -82,6 +102,10 @@ const filterConfig = {
   switches: { icon: <IoIosSwitch className={styles.icon} /> },
   firewall: { icon: <BsFillHddNetworkFill className={styles.icon} /> },
   accesspt: { icon: <TbAccessPoint className={styles.icon} /> },
+  tv: { icon: <FaTv className={styles.icon} /> },
+  server: { icon: <GrServerCluster className={styles.icon} /> },
+  mobile: { icon: <FaMobileRetro className={styles.icon} /> },
+  headphone: { icon: <FaHeadphones className={styles.icon} /> },
 };
 
 // ── Helper: format date ───────────────────────────────────────────
@@ -280,6 +304,74 @@ export default function Assets() {
             to_date: formatDate(apt.to_date) || "--",
             user_verified: apt.user_verified,
             status: apt.status,
+          });
+        });
+
+        // TV
+        user.assets.tv.forEach((tv) => {
+          flatData.push({
+            id: tv.id, // ← NEW
+            category: "tv", // ← NEW
+            serial_number: tv.serial,
+            model_name: tv.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(tv.handover_dt),
+            to_date: formatDate(tv.to_date) || "--",
+            user_verified: tv.user_verified,
+            status: tv.status,
+          });
+        });
+
+        // Server
+        user.assets.server.forEach((server) => {
+          flatData.push({
+            id: server.id, // ← NEW
+            category: "server", // ← NEW
+            serial_number: server.serial,
+            model_name: server.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(server.handover_dt),
+            to_date: formatDate(server.to_date) || "--",
+            user_verified: server.user_verified,
+            status: server.status,
+          });
+        });
+
+        // Mobile
+        user.assets.mobile.forEach((mobile) => {
+          flatData.push({
+            id: mobile.id, // ← NEW
+            category: "mobile", // ← NEW
+            serial_number: mobile.serial,
+            model_name: mobile.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(mobile.handover_dt),
+            to_date: formatDate(mobile.to_date) || "--",
+            user_verified: mobile.user_verified,
+            status: mobile.status,
+          });
+        });
+
+        // Headphone
+        user.assets.headphone.forEach((headphone) => {
+          flatData.push({
+            id: headphone.id, // ← NEW
+            category: "headphone", // ← NEW
+            serial_number: headphone.serial,
+            model_name: headphone.model,
+            assigned_to: user.name,
+            emp_id: user.emp_id,
+            department: user.department,
+            handover_date: formatDate(headphone.handover_dt),
+            to_date: formatDate(headphone.to_date) || "--",
+            user_verified: headphone.user_verified,
+            status: headphone.status,
           });
         });
       });

@@ -10,6 +10,10 @@ const CATEGORY_TABLE = {
   switches:  { table: 'asset_switches',  imeiCol: null, phoneCol: null },
   firewall:  { table: 'asset_firewall',  imeiCol: null, phoneCol: null },
   accesspt:  { table: 'asset_accesspt',  imeiCol: null, phoneCol: null },
+  tv:  { table: 'asset_tv',  imeiCol: null, phoneCol: null },
+  mobile:  { table: 'asset_mobile',  imeiCol: null, phoneCol: null },
+  server:  { table: 'asset_server',  imeiCol: null, phoneCol: null },
+  headphone:  { table: 'asset_headphone',  imeiCol: null, phoneCol: null },
 };
 
 

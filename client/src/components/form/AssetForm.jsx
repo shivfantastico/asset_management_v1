@@ -21,6 +21,10 @@ import mouse from "../../pages/assets/mouse.png";
 import switches from "../../pages/assets/switch.png";
 import firewall from "../../pages/assets/firewall.png";
 import accesspt from "../../pages/assets/accesspt.png";
+import tv from "../../pages/assets/tv.png";
+import server from "../../pages/assets/server.png";
+import mobile from "../../pages/assets/mobile.png";
+import headphone from "../../pages/assets/headphone.png";
 
 const getCategoryImage = (category) => {
   switch (category) {
@@ -44,6 +48,14 @@ const getCategoryImage = (category) => {
       return firewall;
     case "accesspt":
       return accesspt;
+    case "tv":
+      return tv;
+    case "server":
+      return server;
+    case "mobile":
+      return mobile;
+    case "headphone":
+      return headphone;
     default:
       return pc;
   }
@@ -119,6 +131,18 @@ const PC_FIELDS = [
   {
     name: "has_antivirus",
     label: "Antivirus Installed ?",
+    type: "checkbox",
+    required: false,
+  },
+  {
+    name: "has_adapter",
+    label: "Adapter ?",
+    type: "checkbox",
+    required: false,
+  },
+  {
+    name: "has_bag",
+    label: "Bag ?",
     type: "checkbox",
     required: false,
   },
@@ -335,6 +359,115 @@ const ACCESSPOINT_FIELD = [
   },
 ];
 
+const TV_FIELD = [
+  { name: "emp_id", label: "Employee ID", type: "text", required: true },
+  { name: "name", label: "Employee Name", type: "text", disabled: false },
+  { name: "department", label: "Department", type: "text", disabled: false },
+  { name: "asset_code", label: "Asset Code", type: "text", required: false },
+  {
+    name: "serial_number",
+    label: "Serial Number",
+    type: "text",
+    required: true,
+  },
+  { name: "make", label: "Make / Brand", type: "text", required: true },
+  { name: "model_name", label: "Model Name", type: "text", required: true },
+  {
+    name: "deployed_location",
+    label: "Deployed Location",
+    type: "text",
+    required: true,
+  },
+];
+
+const SERVER_FIELD = [
+  { name: "emp_id", label: "Employee ID", type: "text", required: true },
+  { name: "name", label: "Employee Name", type: "text", disabled: false },
+  { name: "department", label: "Department", type: "text", disabled: false },
+  { name: "asset_code", label: "Asset Code", type: "text", required: false },
+  {
+    name: "serial_number",
+    label: "Serial Number",
+    type: "text",
+    required: true,
+  },
+  { name: "make", label: "Make / Brand", type: "text", required: true },
+  { name: "model_name", label: "Model Name", type: "text", required: true },
+  {
+    name: "deployed_location",
+    label: "Deployed Location",
+    type: "text",
+    required: true,
+  },
+];
+
+const MOBILE_FIELD = [
+  { name: "emp_id", label: "Employee ID", type: "text", required: true },
+  { name: "name", label: "Employee Name", type: "text", disabled: false },
+  { name: "department", label: "Department", type: "text", disabled: false },
+  { name: "asset_code", label: "Asset Code", type: "text", required: false },
+  {
+    name: "serial_number",
+    label: "Serial Number",
+    type: "text",
+    required: true,
+  },
+  { name: "make", label: "Make / Brand", type: "text", required: true },
+  { name: "model_name", label: "Model Name", type: "text", required: true },
+  {
+    name: "deployed_location",
+    label: "Deployed Location",
+    type: "text",
+    required: true,
+  },
+  {
+    name: "operating_sys",
+    label: "Operating System",
+    type: "text",
+    required: true,
+  },
+  { name: "processor", label: "Processor", type: "text", required: true },
+  {
+    name: "ram",
+    label: "RAM",
+    type: "select",
+    options: ["4 GB", "8 GB", "16 GB", "32 GB", "64 GB"],
+    required: true,
+  },
+  {
+    name: "storage",
+    label: "Storage",
+    type: "select",
+    options: [
+      "128 GB SSD",
+      "256 GB SSD",
+      "512 GB SSD",
+      "1 TB SSD",
+      "256 GB HDD",
+      "512 GB HDD",
+      "1 TB HDD",
+    ],
+    required: true,
+  },
+  { name: "mac_address", label: "MAC Address", type: "text", required: true },
+  { name: "imei_no", label: "IMEI Number", type: "text", required: true },
+];
+
+const HEADPHONE_FIELD = [
+  { name: "emp_id", label: "Employee ID", type: "text", required: true },
+  { name: "name", label: "Employee Name", type: "text", disabled: false },
+  { name: "department", label: "Department", type: "text", disabled: false },
+  { name: "asset_code", label: "Asset Code", type: "text", required: false },
+  {
+    name: "serial_number",
+    label: "Serial Number",
+    type: "text",
+    required: true,
+  },
+  { name: "make", label: "Make / Brand", type: "text", required: true },
+  { name: "model_name", label: "Model Name", type: "text", required: true },
+];
+
 /* Common fields shared by all asset types */
 const COMMON_FIELDS = [
   // handover info
@@ -447,6 +580,14 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
                       ? FIREWALL_FIELD
                       : category === "accesspt"
                         ? ACCESSPOINT_FIELD
+                            : category === "tv"
+                              ? TV_FIELD
+                                : category === "server"
+                                  ? SERVER_FIELD
+                                    : category === "mobile"
+                                      ? MOBILE_FIELD
+                                         : category === "headphone"
+                                           ? HEADPHONE_FIELD
                         : [];
 
   const categoryLabels = {
@@ -460,6 +601,10 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
     switches: "Switch Details",
     firewall: "Firewall Details",
     accesspt: "Access Point Details",
+    tv: "TV Details",
+    server: "Server Details",
+    mobile: "Mobile Details",
+    headphone: "Headphone Details",
   };
 
   /* Render a single field */
@@ -733,8 +878,32 @@ export default function AssetForm({ onSubmit, isSubmitting }) {
             },
             {
               value: "accesspt",
-              label: "Access POint",
+              label: "Access Point",
               icon: "📡",
+              disabled: false,
+            },
+            {
+              value: "tv",
+              label: "TV",
+              icon: "📺",
+              disabled: false,
+            },
+            {
+              value: "server",
+              label: "Server",
+              icon: "🗄️",
+              disabled: false,
+            },
+            {
+              value: "mobile",
+              label: "Mobile",
+              icon: "📞",
+              disabled: false,
+            },
+            {
+              value: "headphone",
+              label: "headphone",
+              icon: "🎧",
               disabled: false,
             },
           ].map((cat) => (

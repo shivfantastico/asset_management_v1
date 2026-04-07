@@ -33,19 +33,17 @@ export default function Navbar({ onMenuClick, userObj }) {
     navigate("/login");
   };
 
-const getInitials = (name) => {
-  if (!name) return "";
+  const getInitials = (name) => {
+    if (!name) return "";
 
-  const words = name.trim().split(" ");
+    const words = name.trim().split(" ");
 
-  if (words.length === 1) {
-    return words[0][0].toUpperCase(); // Shritesh → S
-  }
+    if (words.length === 1) {
+      return words[0][0].toUpperCase(); // Shritesh → S
+    }
 
-  return (
-    words[0][0] + words[words.length - 1][0]
-  ).toUpperCase(); // Shritesh Bucche → SB
-};
+    return (words[0][0] + words[words.length - 1][0]).toUpperCase(); // Shritesh Bucche → SB
+  };
 
   return (
     <header className={styles.navbar}>
@@ -70,7 +68,9 @@ const getInitials = (name) => {
           aria-label="Profile menu"
           aria-expanded={dropdownOpen}
         >
-          <span className={styles.avatarInitials}>{getInitials(userObj?.name)}</span>
+          <span className={styles.avatarInitials}>
+            {getInitials(userObj?.name)}
+          </span>
           <span className={styles.avatarStatus} />
           <svg
             className={`${styles.chevron} ${dropdownOpen ? styles.chevronOpen : ""}`}
@@ -92,7 +92,9 @@ const getInitials = (name) => {
         >
           {/* User Info Header */}
           <div className={styles.dropdownHeader}>
-            <div className={styles.dropdownAvatar}>{getInitials(userObj?.name)}</div>
+            <div className={styles.dropdownAvatar}>
+              {getInitials(userObj?.name)}
+            </div>
             <div className={styles.dropdownUserInfo}>
               <span className={styles.dropdownName}>{userObj?.name}</span>
               <span className={styles.dropdownRole}>Administrator</span>

@@ -20,19 +20,24 @@ import { FaComputerMouse } from "react-icons/fa6";
 import { IoIosSwitch } from "react-icons/io";
 import { BsFillHddNetworkFill } from "react-icons/bs";
 import { TbAccessPoint } from "react-icons/tb";
+import { FaTv } from "react-icons/fa";
+import { GrServerCluster } from "react-icons/gr";
+import { FaMobileRetro } from "react-icons/fa6";
+import { FaHeadphones } from "react-icons/fa";
+
 
 const CATEGORY_GROUPS = {
   computing: {
     label: "Computing Devices",
-    categories: ["pc", "tablet", "printer"],
+    categories: ["pc", "tablet", "printer", "tv", "mobile"],
   },
   peripherals: {
     label: "Peripherals",
-    categories: ["keyboard", "mouse"],
+    categories: ["keyboard", "mouse", "headphone"],
   },
   network: {
     label: "Network Equipment",
-    categories: ["switches", "firewall", "accesspt", "dongle", "gsmphone"],
+    categories: ["server", "switches", "firewall", "accesspt", "dongle", "gsmphone"],
   },
 };
 
@@ -48,6 +53,10 @@ const CATEGORY_CONFIG = {
   switches: { label: "Switches", icon: <IoIosSwitch /> },
   firewall: { label: "Firewalls", icon: <BsFillHddNetworkFill /> },
   accesspt: { label: "Access Points", icon: <TbAccessPoint /> },
+  tv: { label: "TV", icon: <FaTv /> },
+  server: { label: "Server", icon: <GrServerCluster /> },
+  mobile: { label: "Mobile", icon: <FaMobileRetro /> },
+  headphone: {label: "Headphone", icon:<FaHeadphones />}
 };
 
 export default function AssetFilters({

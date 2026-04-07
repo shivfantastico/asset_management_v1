@@ -45,6 +45,8 @@ const FIELD_LABELS = {
   specifications: "Specifications",
   windows_product_key: "Windows Product Key",
   has_antivirus: "Antivirus Installed",
+  has_adapter: "Adapter",
+  has_bag: "Bag",
   deployed_location: "Deployed Location",
   operating_sys: "Operating System",
   processor: "Processor",
@@ -83,6 +85,8 @@ const SECTION_DEFS = [
       "specifications",
       "windows_product_key",
       "has_antivirus",
+      "has_adapter",
+      "has_bag",
       "operating_sys",
       "processor",
       "keyboard_type",
@@ -113,6 +117,10 @@ const CATEGORY_LABELS = {
   switches: "Switch",
   firewall: "Firewall",
   accesspt: "Access Point",
+  tv: "TV",
+  server: "Server",
+  mobile: "Mobile",
+  headphone: "Headphone"
 };
 
 // ── Format a single value for display ─────────────────────────────
@@ -453,6 +461,22 @@ function PrintPhase({ formData, category, onClose }) {
                     {
                       label: "Antivirus Installed",
                       value: formData.has_antivirus,
+                    },
+                  ]
+                : []),
+              ...(formData.has_adapter
+                ? [
+                    {
+                      label: "Adapter",
+                      value: formData.has_adapter,
+                    },
+                  ]
+                : []),
+              ...(formData.has_bag
+                ? [
+                    {
+                      label: "Bag",
+                      value: formData.has_bag,
                     },
                   ]
                 : []),

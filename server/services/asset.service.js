@@ -18,6 +18,10 @@ exports.allAsset = async () => {
       u.asset_switches,
       u.asset_firewall,
       u.asset_accesspt,
+      u.asset_tv,
+      u.asset_server,
+      u.asset_mobile,
+      u.asset_headphone,
 
       -- PC Fields
       pc.id AS pc_id,
@@ -114,7 +118,43 @@ exports.allAsset = async () => {
       a.to_date AS accesspt_to_date,
       a.user_verified AS accesspt_user_verified,
       a.serial_number AS accesspt_serial,
-      a.status AS accesspt_status
+      a.status AS accesspt_status,
+
+      -- TV Fields
+      tv.id AS tv_id,
+      tv.model_name AS tv_model,
+      tv.handover_date AS tv_handover_date,
+      tv.to_date AS tv_to_date,
+      tv.user_verified AS tv_user_verified,
+      tv.serial_number AS tv_serial,
+      tv.status AS tv_status,
+
+      -- Server Fields
+      server.id AS server_id,
+      server.model_name AS server_model,
+      server.handover_date AS server_handover_date,
+      server.to_date AS server_to_date,
+      server.user_verified AS server_user_verified,
+      server.serial_number AS server_serial,
+      server.status AS server_status,
+
+      -- Mobile Fields
+      mobile.id AS mobile_id,
+      mobile.model_name AS mobile_model,
+      mobile.handover_date AS mobile_handover_date,
+      mobile.to_date AS mobile_to_date,
+      mobile.user_verified AS mobile_user_verified,
+      mobile.serial_number AS mobile_serial,
+      mobile.status AS mobile_status,
+
+      -- headphone Fields
+      headphone.id AS headphone_id,
+      headphone.model_name AS headphone_model,
+      headphone.handover_date AS headphone_handover_date,
+      headphone.to_date AS headphone_to_date,
+      headphone.user_verified AS headphone_user_verified,
+      headphone.serial_number AS headphone_serial,
+      headphone.status AS headphone_status
 
     FROM users u
     LEFT JOIN asset_pc pc ON pc.user_id = u.id
@@ -127,6 +167,10 @@ exports.allAsset = async () => {
     LEFT JOIN asset_switches s ON s.user_id = u.id
     LEFT JOIN asset_firewall f ON f.user_id = u.id
     LEFT JOIN asset_accesspt a ON a.user_id = u.id
+    LEFT JOIN asset_tv tv ON tv.user_id = u.id
+    LEFT JOIN asset_server server ON server.user_id = u.id
+    LEFT JOIN asset_mobile mobile ON mobile.user_id = u.id
+    LEFT JOIN asset_headphone headphone ON headphone.user_id = u.id
   `;
 
   const [rows] = await pool.query(query);
@@ -169,6 +213,10 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         asset_switches: 0,  
         asset_firewall: 0,
         asset_accesspt: 0,
+        asset_tv: 0,
+        asset_server: 0,
+        asset_mobile: 0,
+        asset_headphone: 0,
       };
 
       assetFlags[`asset_${category}`] = 1;
@@ -208,9 +256,9 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         insertQuery = `
           INSERT INTO ${tableName}
           (asset_type, serial_number, model_name, make, operating_sys, monitor_serial_number,
-          has_antivirus, windows_product_key, specifications, ram, storage, asset_code,
+          has_antivirus,has_adapter, has_bag, windows_product_key, specifications, ram, storage, asset_code,
           handover_date, handed_over_by, requested_by, remarks, user_verified,status, user_id)
-          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
         `;
         values = [
           assetData.asset_type,
@@ -220,6 +268,8 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
           assetData.operating_sys,
           assetData.monitor_serial_number || null,
           assetData.has_antivirus,
+          assetData.has_adapter,
+          assetData.has_bag,
           assetData.windows_product_key,
           assetData.specifications,
           assetData.ram,
@@ -492,6 +542,125 @@ exports.addAssetType = async (empid, category, userData, assetData) => {
         ];
         break;
 
+        case "mobile":
+        tableName = "asset_mobile";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, make, operating_sys, processor,
+          deployed_location,
+          ram, storage, mac_address, imei_no, 
+          serial_number, asset_code, handover_date,
+          handed_over_by, requested_by, remarks, user_verified, status,
+           user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.make,
+          assetData.operating_sys,
+          assetData.processor,
+          assetData.deployed_location,
+          assetData.ram,
+          assetData.storage,
+          assetData.mac_address,
+          assetData.imei_no,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.handover_date,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+        case "tv":
+        tableName = "asset_tv";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, handover_date,
+           deployed_location, make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+            user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.handover_date,
+          assetData.deployed_location,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+        case "server":
+        tableName = "asset_server";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, handover_date,
+           deployed_location, make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+            user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.handover_date,
+          assetData.deployed_location,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+        case "headphone":
+        tableName = "asset_headphone";
+        insertQuery = `
+          INSERT INTO ${tableName}
+          (model_name, serial_number,
+           asset_code, handover_date,
+           make,
+           handed_over_by, requested_by,
+           remarks, user_verified, status,
+            user_id)
+          VALUES (?, ?, ?, ?, ?, ?, ?, ?, ?, ?, ?)
+        `;
+        values = [
+          assetData.model_name,
+          assetData.serial_number,
+          assetData.asset_code,
+          assetData.handover_date,
+          assetData.make,
+          assetData.handed_over_by,
+          assetData.requested_by,
+          assetData.remarks,
+          assetData.user_verified || 0,
+          assetData.status || 1,
+          userId,
+        ];
+        break;
+
+
+
       default:
         throw new Error("Invalid category");
     }
@@ -526,7 +695,7 @@ exports.searchSingleAsset = async (category, query) => {
 
   const isNumeric = !isNaN(q); // ✅ check if ID
 
-  const noAssetCodeTables = ["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt"];
+  const noAssetCodeTables = ["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt", "tv", "server", "mobile", "headphone"];
 
   if (noAssetCodeTables.includes(category)) {
     if (isNumeric) {
@@ -570,7 +739,7 @@ exports.searchAssets = async (query) => {
 
   // 🔴 STEP 1: Try exact match first
   for (const [category, { table }] of Object.entries(CATEGORY_TABLE)) {
-    const hasAssetCode = !["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt"].includes(category);
+    const hasAssetCode = !["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt", "tv", "server", "mobile", "headphone"].includes(category);
 
     let sql, params;
 
@@ -620,7 +789,7 @@ exports.searchAssets = async (query) => {
   const results = [];
 
   for (const [category, { table }] of Object.entries(CATEGORY_TABLE)) {
-    const hasAssetCode = !["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt"].includes(category);
+    const hasAssetCode = !["gsmphone", "dongle", "keyboard", "mouse", "switches", "firewall", "accesspt", "tv", "server", "mobile", "headphone"].includes(category);
 
     let sql, params;
 
@@ -735,6 +904,8 @@ exports.getAssetHistory = async (category, id) => {
       ram: currentAsset.ram || null,
       storage: currentAsset.storage || null,
       has_antivirus: currentAsset.has_antivirus || null,
+      has_adapter: currentAsset.has_adapter || null,
+      has_bag: currentAsset.has_bag || null,
       specifications: currentAsset.specifications || null,
       deployed_location: currentAsset.deployed_location || null,
       operating_sys: currentAsset.operating_sys || null,
